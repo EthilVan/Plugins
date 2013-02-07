@@ -11,6 +11,7 @@
 
 	<artifactId>accounts</artifactId>
 	<name>Accounts</name>
+	<description>EthilVan accounts management plugin</description>
 
 	<dependencies>
 		<dependency>

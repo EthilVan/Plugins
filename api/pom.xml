@@ -11,6 +11,7 @@
 
 	<artifactId>api</artifactId>
 	<name>API</name>
+	<description>EthilVan bukkit plugins API</description>
 
 	<build>
 		<plugins>

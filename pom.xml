@@ -29,6 +29,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<plugin.version>${project.version}</plugin.version>
 	</properties>
 
 	<repositories>

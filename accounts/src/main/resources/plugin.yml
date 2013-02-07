@@ -1,0 +1,8 @@
+name: EV-${project.name}
+version: ${plugin.version}
+
+description: ${project.description}
+
+main: fr.ethilvan.bukkit.accounts.EVAccounts
+database: true
+depend: [EV-API]
