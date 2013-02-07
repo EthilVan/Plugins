@@ -29,6 +29,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.skip>true</maven.test.skip>
 		<plugin.version>${project.version}</plugin.version>
 	</properties>
 
