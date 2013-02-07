@@ -4,8 +4,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>fr.ethilvan</groupId>
-		<artifactId>bukkit</artifactId>
+		<groupId>fr.ethilvan.bukkit</groupId>
+		<artifactId>parent</artifactId>
 		<version>1.4.7-dev-SNAPSHOT</version>
 	</parent>
 

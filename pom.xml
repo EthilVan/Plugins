@@ -3,8 +3,8 @@
 				http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>fr.ethilvan</groupId>
-	<artifactId>bukkit</artifactId>
+	<groupId>fr.ethilvan.bukkit</groupId>
+	<artifactId>parent</artifactId>
 	<version>1.4.7-dev-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
