@@ -15,7 +15,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>fr.ethilvan</groupId>
+			<groupId>fr.ethilvan.bukkit</groupId>
 			<artifactId>api</artifactId>
 		</dependency>
 		<dependency>

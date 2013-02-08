@@ -93,7 +93,7 @@
 				</exclusions>
 			</dependency>
 			<dependency>
-				<groupId>fr.ethilvan</groupId>
+				<groupId>fr.ethilvan.bukkit</groupId>
 				<artifactId>api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
