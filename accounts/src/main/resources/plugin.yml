@@ -5,3 +5,27 @@ description: ${project.description}
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
 database: true
 depend: [EV-API]
+
+commands:
+    realname:
+        description: "Affiche le pseudo Minecraft."
+        usage: "<name-in-game>"
+        aliases: ["real-name", "rn", "minecraft-name", "minecraft-name", "mn"]
+        permission: ev.accounts.realname
+    visitors:
+        description: "Affiche la liste des visiteurs enregistre online ou non"
+        usage: ""
+        permission: ev.accounts.visitors
+
+permissions:
+    ev.accounts.*:
+        description: "Permet d'acceder aux commandes relatives au comptes."
+        children:
+            ev.accounts.realname: true
+            ev.accounts.visitors: true
+    ev.accounts.realname:
+        description: "Permet d'afficher le pseudo Minecraft."
+        default: false
+    ev.accounts.visitors:
+        description: "Permet d'afficher la liste des visiteurs."
+        default: false
