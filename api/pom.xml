@@ -13,6 +13,17 @@
 	<name>API</name>
 	<description>EthilVan bukkit plugins API</description>
 
+	<dependencies>
+        <dependency>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>Vault</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q</groupId>
+            <artifactId>worldedit</artifactId>
+        </dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
