@@ -1,8 +1,7 @@
 name: EV-${project.name}
 version: ${plugin.version}
-
 description: ${project.description}
 
-main: fr.ethilvan.bukkit.api.EVAPI
+main: fr.ethilvan.bukkit.${project.artifactId}.EV${project.name}
 database: true
 depend: [ProtocolLib, Vault, WorldEdit]
