@@ -3,4 +3,3 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.EV${project.name}
-depend: [ProtocolLib, Vault, WorldEdit]

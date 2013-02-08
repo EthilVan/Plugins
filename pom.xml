@@ -133,16 +133,17 @@
 
 	<modules>
 		<module>api</module>
+		<module>inventories</module>
 		<module>accounts</module>
-      <module>dimensions</module>
-      <module>permissions</module>
-      <module>superpigmode</module>
-      <module>orator</module>
-      <module>portals</module>
-      <module>misc</module>
-      <module>drops</module>
-      <module>deaths</module>
-      <module>snowfight</module>
-   </modules>
+		<module>dimensions</module>
+		<module>permissions</module>
+		<module>superpigmode</module>
+		<module>orator</module>
+		<module>portals</module>
+		<module>misc</module>
+		<module>drops</module>
+		<module>deaths</module>
+		<module>snowfight</module>
+	</modules>
 
 </project>
