@@ -14,7 +14,7 @@ import com.avaje.ebean.EbeanServer;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.inventories.Inventories;
 
-public class EVInventories extends JavaPlugin implements Inventories {
+public class InventoriesPlugin extends JavaPlugin implements Inventories {
 
     @Override
     public List<Class<?>> getDatabaseClasses() {

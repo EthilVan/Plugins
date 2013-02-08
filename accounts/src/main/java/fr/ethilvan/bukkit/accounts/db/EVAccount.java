@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.bukkit.ChatColor;
 
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
-import fr.ethilvan.bukkit.accounts.AccountsManager;
+import fr.ethilvan.bukkit.accounts.EVAccounts;
 import fr.ethilvan.bukkit.api.accounts.Account;
 
 @Entity
@@ -23,7 +23,7 @@ public class EVAccount implements Account {
     private static Map<String, String[]>  rolesInheritance;
     private static Map<String, ChatColor> nameColors;
 
-    public static void initConfig(AccountsManager plugin) {
+    public static void initConfig(EVAccounts plugin) {
         /*AccountsConfig config = new AccountsConfig(plugin);
         rolesInheritance = config.getRolesInheritance();
         nameColors = config.getRolesColors();*/

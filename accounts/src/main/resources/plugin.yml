@@ -2,6 +2,6 @@ name: EV-${project.name}
 version: ${plugin.version}
 description: ${project.description}
 
-main: fr.ethilvan.bukkit.${project.artifactId}.EV${project.name}
+main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
 database: true
 depend: [EV-API]
