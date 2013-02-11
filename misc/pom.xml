@@ -14,4 +14,19 @@
 	<name>Misc</name>
 	<description>Miscellaneous plugin</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>fr.ethilvan.bukkit</groupId>
+			<artifactId>api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>uk.co.oliwali</groupId>
+			<artifactId>HawkEye</artifactId>
+			<version>1.0.7b</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/HawkEye.jar</systemPath>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
 </project>
