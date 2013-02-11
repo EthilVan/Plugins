@@ -3,3 +3,42 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+depend: [EV-API, EV-Dimensions]
+
+commands:
+    permissions:
+        description: "Commande principale"
+        usage: "show | update | update-all"
+        aliases: ["perm"]
+    "permissions show":
+        description: "Montre l'ensemble des permissions associés au role donné."
+        usage: "role [dimension]"
+        permission: ev.permissions.show
+        aliases: ["permissions list", "permissions ls"]
+    "permissions update":
+        description: "Mets à jour les permissions d'un ou plusieurs joueur"
+        usage: "[joueur...]"
+        permission: ev.permissions.update
+        aliases: ["permissions reload", "permissions up", "permissions reload"]
+    "permissions update-all":
+        description: "Mets à jour les permissions de tous les joueurs connectés"
+        usage: ""
+        permission: ev.permissions.updateall
+        aliases: ["permissions upa"]
+
+permissions:
+    ev.permissions.*:
+        description: "Permet d'acceder au commandes liees au permissions."
+        children:
+            ev.permissions.show: true
+            ev.permissions.update: true
+            ev.permissions.updateall: true
+    ev.permissions.show:
+        description: "Permet d'afficher les permissions."
+        default: false
+    ev.permissions.update:
+        description: "Permet de mettre a jour les permissions"
+        default: false
+    ev.permissions.updateall:
+        description: "Permet de mettre a jour les permissions"
+        default: false
