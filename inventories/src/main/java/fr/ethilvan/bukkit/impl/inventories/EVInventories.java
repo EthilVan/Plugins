@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.inventories;
+package fr.ethilvan.bukkit.impl.inventories;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -6,6 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import com.avaje.ebean.EbeanServer;
 
 import fr.ethilvan.bukkit.api.inventories.Inventories;
+import fr.ethilvan.bukkit.inventories.InventoriesPlugin;
 
 public class EVInventories implements Inventories {
 

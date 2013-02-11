@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.dimensions;
+package fr.ethilvan.bukkit.impl.dimensions;
 
 import java.util.Collections;
 import java.util.HashMap;

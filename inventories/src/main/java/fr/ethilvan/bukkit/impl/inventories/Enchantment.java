@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.inventories;
+package fr.ethilvan.bukkit.impl.inventories;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

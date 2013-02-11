@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.permissions;
+package fr.ethilvan.bukkit.impl.permissions;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,6 +14,7 @@ import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
 import fr.ethilvan.bukkit.api.permissions.Permissions;
+import fr.ethilvan.bukkit.permissions.PermissionsPlugin;
 
 public class EVPermissions implements Permissions {
 

@@ -15,15 +15,16 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
-import fr.ethilvan.bukkit.accounts.db.EVAccount;
-import fr.ethilvan.bukkit.accounts.db.MinecraftStats;
-import fr.ethilvan.bukkit.accounts.db.Visitor;
 import fr.ethilvan.bukkit.accounts.listeners.AccountsListener;
 import fr.ethilvan.bukkit.accounts.listeners.NamePlatePacketListener;
 import fr.ethilvan.bukkit.accounts.listeners.VisitorsListener;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
 import fr.ethilvan.bukkit.api.accounts.Accounts;
+import fr.ethilvan.bukkit.impl.accounts.EVAccount;
+import fr.ethilvan.bukkit.impl.accounts.EVAccounts;
+import fr.ethilvan.bukkit.impl.accounts.MinecraftStats;
+import fr.ethilvan.bukkit.impl.accounts.Visitor;
 
 public class AccountsPlugin extends JavaPlugin implements Runnable {
 

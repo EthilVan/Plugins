@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.permissions;
+package fr.ethilvan.bukkit.impl.permissions;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.accounts.db;
+package fr.ethilvan.bukkit.impl.accounts;
 
 import java.sql.Timestamp;
 

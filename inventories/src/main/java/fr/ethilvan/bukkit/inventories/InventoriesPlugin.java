@@ -9,6 +9,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.inventories.Inventories;
+import fr.ethilvan.bukkit.impl.inventories.EVInventories;
+import fr.ethilvan.bukkit.impl.inventories.Enchantment;
+import fr.ethilvan.bukkit.impl.inventories.Inventory;
+import fr.ethilvan.bukkit.impl.inventories.Slot;
 
 public class InventoriesPlugin extends JavaPlugin {
 

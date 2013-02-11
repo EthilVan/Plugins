@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.accounts;
+package fr.ethilvan.bukkit.impl.accounts;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,8 +10,7 @@ import java.util.Set;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
-import fr.ethilvan.bukkit.accounts.db.EVAccount;
-import fr.ethilvan.bukkit.accounts.db.Visitor;
+import fr.ethilvan.bukkit.accounts.AccountsPlugin;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
 import fr.ethilvan.bukkit.api.accounts.Accounts;

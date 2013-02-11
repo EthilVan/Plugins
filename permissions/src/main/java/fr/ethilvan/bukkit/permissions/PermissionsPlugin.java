@@ -15,6 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.permissions.Permissions;
+import fr.ethilvan.bukkit.impl.permissions.EVPermission;
+import fr.ethilvan.bukkit.impl.permissions.EVPermissions;
 
 public class PermissionsPlugin extends JavaPlugin {
 

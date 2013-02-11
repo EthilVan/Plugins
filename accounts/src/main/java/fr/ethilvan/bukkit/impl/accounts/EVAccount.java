@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.accounts.db;
+package fr.ethilvan.bukkit.impl.accounts;
 
 import java.sql.Timestamp;
 import java.util.Map;
@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import org.bukkit.ChatColor;
 
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
-import fr.ethilvan.bukkit.accounts.EVAccounts;
 import fr.ethilvan.bukkit.api.accounts.Account;
 
 @Entity

@@ -24,6 +24,8 @@ import fr.ethilvan.bukkit.dimensions.listener.DimensionListener;
 import fr.ethilvan.bukkit.dimensions.listener.EventAdapter;
 import fr.ethilvan.bukkit.dimensions.listener.SpawnBedListener;
 import fr.ethilvan.bukkit.dimensions.spawnbed.SpawnBed;
+import fr.ethilvan.bukkit.impl.dimensions.EVDimension;
+import fr.ethilvan.bukkit.impl.dimensions.EVDimensions;
 
 public class DimensionsPlugin extends JavaPlugin {
 

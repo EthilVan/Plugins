@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.dimensions;
+package fr.ethilvan.bukkit.impl.dimensions;
 
 import static org.apache.commons.lang.WordUtils.capitalize;
 

@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.inventories;
+package fr.ethilvan.bukkit.impl.inventories;
 
 import java.util.ArrayList;
 import java.util.List;
