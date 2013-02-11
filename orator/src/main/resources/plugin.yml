@@ -3,3 +3,19 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+depends: [EV-API]
+
+commands:
+    orator:
+        description: "Commande principale"
+        usage: "[toggle|time]"
+    "orator toggle":
+        description: "Toggle orator mode."
+        usage: ""
+        aliases: ["ot"]
+        permission: "ev.orator.use"
+    "orator-time":
+        description: "Set the player client time"
+        usage: "[time]"
+        aliases: ["ott"]
+        permission: "ev.orator.time"

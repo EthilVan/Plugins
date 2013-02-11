@@ -14,4 +14,12 @@
 	<name>Orator</name>
 	<description>Orator mode plugin</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>fr.ethilvan.bukkit</groupId>
+			<artifactId>api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
 </project>
