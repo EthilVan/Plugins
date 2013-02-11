@@ -3,3 +3,41 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+depend: [dynmap, EV-API]
+
+commands:
+    super-pig-mode:
+        description: "Commande principale"
+        usage: '[command=toggle]'
+        aliases: ["spm"]
+    "super-pig-mode toggle":
+        description: "Active ou desactive le SuperPig Mode."
+        usage: "[-v]"
+        permission: spm.use
+        aliases: ["spmt"]
+    "super-pig-mode vanish":
+        description: "Passe en mode vanish."
+        usage: ""
+        permission: spm.hide
+        aliases: ["spmv"]
+    "super-pig-mode save-inventory":
+        description: "Sauvegarde l'inventaire courant en tant qu'inventaire par défaut du mode SPM."
+        usage: ""
+        permission: spm.use
+        aliases: ["spmsi"]
+    "super-pig-mode list":
+        description: "Liste les joueurs en SPM."
+        usage: ""
+        permission: spm.use
+        aliases: ["spmls"]
+
+permissions:
+    spm.use:
+        description: "Permet d'activer ou de desactiver le SuperPig Mode."
+        default: false
+    spm.hide:
+        description: "Permet de se cacher des autres joueurs."
+        default: false
+    spm.see-hidden:
+        description: "Permet de voir les joueurs cachés"
+        default: false
