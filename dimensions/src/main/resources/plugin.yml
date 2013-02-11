@@ -3,3 +3,16 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+depend: [EV-API]
+
+commands:
+    worldtp:
+        description: "Teleport to the given world"
+        usage: "/<command> [world]"
+        permission: dimensions.worldtp
+        aliases: ["wtp"]
+
+permissions:
+    dimensions.worldtp:
+        description: "Permet de voyager entre les mondes."
+        default: false
