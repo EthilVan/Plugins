@@ -3,3 +3,79 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+depend: [EV-API, Dimensions]
+
+commands:
+    # Commande principale.
+    portals:
+        description: "Commande principale."
+        usage: "define | delete | portals | set | select | teleport | lighton | lightoff"
+        aliases: ["pr"]
+
+    # Commandes de Gestion des Portails
+    "portals define":
+        description: "Défini un nouveau portail."
+        usage: "<portail>"
+        aliases: ["portals def"]
+        permission: "portals.cmd.define"
+    "portals delete":
+        description: "Supprime un portail."
+        usage: "<portail>"
+        aliases: ["portals remove", "portals rm"]
+        permission: "portals.cmd.delete"
+    "portals list":
+        description: "Liste les portails disponibles."
+        usage: ""
+        aliases: ["portals ls"]
+        permission: "portals.cmd.list"
+
+    # Commandes de mise en place
+    "portals set":
+        usage: "area | inside | dest"
+    "portals set area":
+        description: "Défini ou redéfini la region du portail."
+        usage: "<portail>"
+        permission: "portals.cmd.set"
+    "portals set inside":
+        description: "Défini ou redéfini l'intérieur du portail."
+        usage: "<portail>"
+        permission: "portals.cmd.set"
+    "portals set dest":
+        description: "Défini ou redéfini la destination du portail."
+        usage: "<portail> <dest>"
+        permission: "portals.cmd.set"
+
+    # Commandes diverses
+    "portals select":
+        description: "Séléctionne la région du portail indiqué."
+        usage: "<portail>"
+        aliases: ["portals sel"]
+        permission: "portals.cmd.select"
+    "portals teleport":
+        description: "Téléporte à un portail."
+        usage: "<portail>"
+        aliases: ["portals tp"]
+        permission: "portals.cmd.teleport"
+    "portals lighton":
+        description: "Allume un portail."
+        usage: "<portail>"
+        aliases: ["portals switchon", "portals on"]
+        permission: "portals.cmd.lighton"
+    "portals lightoff":
+        description: "Eteint un portail."
+        usage: "<portail>"
+        aliases: ["portals switchoff", "portals off"]
+        permission: "portals.cmd.lightoff"
+
+permissions:
+    portals.setup:
+        default: false
+        children:
+            portals.cmd.define: true
+            portals.cmd.set: true
+            portals.cmd.select: true
+            portals.cmd.portals: true
+            portals.cmd.delete: true
+            portals.cmd.lighton: true
+            portals.cmd.lightoff: true
+            portals.cmd.teleport: true
