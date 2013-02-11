@@ -14,4 +14,11 @@
 	<name>SnowFight</name>
 	<description>Snowball fight plugin</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>fr.ethilvan.bukkit</groupId>
+			<artifactId>api</artifactId>
+		</dependency>
+	</dependencies>
+
 </project>

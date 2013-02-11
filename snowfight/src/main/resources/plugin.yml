@@ -3,3 +3,5 @@ version: ${plugin.version}
 description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+depend: [EV-API]
+database: true
