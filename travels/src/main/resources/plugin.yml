@@ -1,0 +1,146 @@
+name: EV-${project.name}
+version: ${plugin.version}
+description: ${project.description}
+
+main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
+
+commands:
+    # Commande principale.
+    travels:
+        description: "Commande principale"
+        usage: ""
+
+    # Commandes port.
+    "travels port":
+        description: "Commande port principale"
+        usage: ""
+        aliases: ["port"]
+    "travels port list":
+        description: "Liste les ports définis"
+        usage: ""
+        aliases: ["travels port ls"]
+        permission: "travels.port.list"
+    "travels port info":
+        description: "Affiche les informations relatives au port"
+        usage: "<port>"
+        aliases: ["travels port i"]
+        permission: "travels.port.info"
+    "travels port create":
+        description: "Crée un port"
+        usage: "<name>"
+        aliases: ["travels port define", "travels port def"]
+        permission: "travels.port.create"
+    "travels port remove":
+        description: "Supprime un port"
+        usage: "<port>"
+        aliases: ["travels port delete", "travels port rm", "travels port del"]
+        permission: "travels.port.remove"
+    "travels port departure":
+        description: "Définit la zone du port en utilisant la séléction WorldEdit"
+        usage: "<port>"
+        aliases: ["travels port dep"]
+        permission: "travels.port.departure"
+    "travels port destination":
+        description: "Définit la position d'arrivée du port en utilisant la position actuelle"
+        usage: "<port>"
+        aliases: ["travels port pos", "travels port dest"]
+        permission: "travels.port.position"
+    "travels port select":
+        description: "Sélectionne la zone de départ du port avec WorldEdit"
+        usage: "<port>"
+        aliases: ["travels port sel"]
+        permission: "travels.port.sel"
+
+    # Commande travel.
+    "travels travel":
+        description: "Commande travel principale"
+        usage: ""
+        aliases: ["travel", "tr"]
+    "travels travel list":
+        description: "Liste les voyages définis"
+        usage: ""
+        aliases: ["travels travel ls"]
+        permission: "travels.travel.list"
+    "travels travel info":
+        description: "Affiche les informations relatives au voyage"
+        usage: "<travel>"
+        aliases: ["travels travel i"]
+        permission: "travels.travel.info"
+    "travels travel create":
+        description: "Crée un voyage"
+        usage: "<name>"
+        aliases: ["travels travel define", "travels travel def"]
+        permission: "travels.travel.create"
+    "travels travel remove":
+        description: "Supprime un voyage"
+        usage: "<travel>"
+        aliases: ["travels travel delete", "travels travel rm", "travels travel del"]
+        permission: "travels.travel.remove"
+    "travels travel departure":
+        description: "Définit le port de départ d'un voyage"
+        usage: "<travel> <port>"
+        aliases: ["travels travel dep"]
+        permission: "travels.travel.departure"
+    "travels travel destination":
+        description: "Définit la destination d'un voyage"
+        usage: "<travel> <port>"
+        aliases: ["travels travel dest"]
+        permission: "travels.travel.destination"
+    "travels travel price":
+        description: "Définit le prix d'un voyage"
+        usage: "<travel> <prix>"
+        permission: "travels.travel.price"
+    "travels travel schedule":
+        description: "Définit l'horaire d'un voyage"
+        usage: "<travel> <time>"
+        aliases: ["travels travel sched", "travels travel hor"]
+        permission: "travels.travel.schedule"
+    "travels travel toggleactive":
+        description: ""
+        usage: "<travel>"
+        aliases: ["travels travel toggleactive"]
+        permission: "travels.travel.toggleactive"
+
+permissions:
+
+    "travels.*":
+        default: op
+        children:
+            travels.port: true
+            travels.travel: true
+
+    travels.port:
+        children:
+            travels.port.infos: true
+            travels.port.create: true
+            travels.port.remove: true
+            travels.port.departure: true
+            travels.port.position: true
+            travels.port.sel: true
+
+    travels.travel:
+        children:
+            travels.travel.infos: true
+            travels.travel.create: true
+            travels.travel.remove: true
+            travels.travel.departure: true
+            travels.travel.destination: true
+            travels.travel.price: true
+            travels.travel.schedule: true
+            travels.use: true
+            travels.travel.toggleactive: true
+
+    travels.infos:
+        children:
+            travels.port.infos: true
+            travels.travel.infos: true
+
+    travels.port.infos:
+        children:
+            travels.port.list: true
+            travels.port.info: true
+
+    travels.travel.infos:
+        children:
+            travels.travel.list: true
+            travels.travel.info: true
