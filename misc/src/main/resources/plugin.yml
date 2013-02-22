@@ -4,3 +4,25 @@ description: ${project.description}
 
 main: fr.ethilvan.bukkit.${project.artifactId}.${project.name}Plugin
 depend: [EV-API]
+
+commands:
+    evmisc:
+        description: "Commande principale."
+        usage: ""
+        aliases: ["misc"]
+
+    "evmisc setauthor":
+        description: "Redéfinis l'auteur"
+        usage: ""
+        aliases: ["setauthor"]
+        permission: "ev.misc.commands.setauthor"
+    "evmisc setpages":
+        description: "Redéfinis les pages"
+        usage: ""
+        aliases: ["setpages"]
+        permission: "ev.misc.commands.setpages"
+    "evmisc settitle":
+        description: "Redéfinis le titre du livre"
+        usage: ""
+        aliases: ["settitle"]
+        permission: "ev.misc.commands.settitle"

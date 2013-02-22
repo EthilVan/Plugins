@@ -1,5 +1,7 @@
 package fr.ethilvan.bukkit.misc;
 
+import java.util.Locale;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.Listener;
@@ -7,6 +9,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import fr.aumgn.bukkitutils.command.CommandsRegistration;
+import fr.ethilvan.bukkit.misc.commands.BookCommands;
 
 public class MiscPlugin extends JavaPlugin {
 
@@ -21,6 +26,10 @@ public class MiscPlugin extends JavaPlugin {
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(listener, this);
         pm.registerEvents(hawkEyeExplosionListener, this);
+
+        CommandsRegistration registration = new CommandsRegistration(this,
+                Locale.FRANCE);
+        registration.register(new BookCommands());
     }
 
     private void createRecipes() {
