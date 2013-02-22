@@ -21,15 +21,6 @@ public class EcoConfig extends YamlConfiguration {
         } catch (InvalidConfigurationException exc) {
             plugin.getLogger().warning("Unable to read " + path);
         }
-        try {
-            YamlConfiguration defaults = new YamlConfiguration();
-            defaults.load(plugin.getResource("eco.yml"));
-            setDefaults(defaults);
-        } catch (IOException exc) {
-            plugin.getLogger().warning("Unable to load " + path);
-        } catch (InvalidConfigurationException exc) { 
-            plugin.getLogger().warning("Unable to load " + path);
-        }
     }
 
     public int getMoneyDrop(Entity entity) {
