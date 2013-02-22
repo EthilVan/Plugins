@@ -57,8 +57,7 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
                 new CommandsRegistration(this, Locale.FRANCE);
         registration.register(new AccountsCommands());
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(
-                this, this, 6000, 6000);
+        Bukkit.getScheduler().runTaskTimer(this, this, 6000, 6000);
     }
 
     @Override

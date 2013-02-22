@@ -9,10 +9,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.ethilvan.bukkit.api.EthilVan;
@@ -28,11 +28,11 @@ public class AccountsListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerPreLogin(PlayerPreLoginEvent event) {
+    public void onPlayerPreLogin(AsyncPlayerPreLoginEvent event) {
         Account account = EthilVan.getAccounts()
                 .getByMinecraftName(event.getName());
         if (account == null)
-            event.disallow(PlayerPreLoginEvent.Result.KICK_WHITELIST, 
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_WHITELIST, 
                     "Vous devez effectuer une postulation\n sur " +
                     "ethilvan.fr pour pouvoir accéder au serveur.");
     }
