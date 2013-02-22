@@ -17,7 +17,7 @@ commands:
         usage: ""
         aliases: ["port"]
     "travels port list":
-        description: "Liste les ports définis"
+        description: "Liste les ports dÃ©finis"
         usage: ""
         aliases: ["travels port ls"]
         permission: "travels.port.list"
@@ -27,7 +27,7 @@ commands:
         aliases: ["travels port i"]
         permission: "travels.port.info"
     "travels port create":
-        description: "Crée un port"
+        description: "CrÃ©e un port"
         usage: "<name>"
         aliases: ["travels port define", "travels port def"]
         permission: "travels.port.create"
@@ -37,17 +37,17 @@ commands:
         aliases: ["travels port delete", "travels port rm", "travels port del"]
         permission: "travels.port.remove"
     "travels port departure":
-        description: "Définit la zone du port en utilisant la séléction WorldEdit"
+        description: "DÃ©finit la zone du port en utilisant la sÃ©lÃ©ction WorldEdit"
         usage: "<port>"
         aliases: ["travels port dep"]
         permission: "travels.port.departure"
     "travels port destination":
-        description: "Définit la position d'arrivée du port en utilisant la position actuelle"
+        description: "DÃ©finit la position d'arrivÃ©e du port en utilisant la position actuelle"
         usage: "<port>"
         aliases: ["travels port pos", "travels port dest"]
         permission: "travels.port.position"
     "travels port select":
-        description: "Sélectionne la zone de départ du port avec WorldEdit"
+        description: "SÃ©lectionne la zone de dÃ©part du port avec WorldEdit"
         usage: "<port>"
         aliases: ["travels port sel"]
         permission: "travels.port.sel"
@@ -58,7 +58,7 @@ commands:
         usage: ""
         aliases: ["travel", "tr"]
     "travels travel list":
-        description: "Liste les voyages définis"
+        description: "Liste les voyages dÃ©finis"
         usage: ""
         aliases: ["travels travel ls"]
         permission: "travels.travel.list"
@@ -68,7 +68,7 @@ commands:
         aliases: ["travels travel i"]
         permission: "travels.travel.info"
     "travels travel create":
-        description: "Crée un voyage"
+        description: "CrÃ©e un voyage"
         usage: "<name>"
         aliases: ["travels travel define", "travels travel def"]
         permission: "travels.travel.create"
@@ -78,21 +78,21 @@ commands:
         aliases: ["travels travel delete", "travels travel rm", "travels travel del"]
         permission: "travels.travel.remove"
     "travels travel departure":
-        description: "Définit le port de départ d'un voyage"
+        description: "DÃ©finit le port de dÃ©part d'un voyage"
         usage: "<travel> <port>"
         aliases: ["travels travel dep"]
         permission: "travels.travel.departure"
     "travels travel destination":
-        description: "Définit la destination d'un voyage"
+        description: "DÃ©finit la destination d'un voyage"
         usage: "<travel> <port>"
         aliases: ["travels travel dest"]
         permission: "travels.travel.destination"
     "travels travel price":
-        description: "Définit le prix d'un voyage"
+        description: "DÃ©finit le prix d'un voyage"
         usage: "<travel> <prix>"
         permission: "travels.travel.price"
     "travels travel schedule":
-        description: "Définit l'horaire d'un voyage"
+        description: "DÃ©finit l'horaire d'un voyage"
         usage: "<travel> <time>"
         aliases: ["travels travel sched", "travels travel hor"]
         permission: "travels.travel.schedule"
