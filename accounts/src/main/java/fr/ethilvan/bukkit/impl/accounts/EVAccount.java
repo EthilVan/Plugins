@@ -32,7 +32,7 @@ public class EVAccount implements Account {
     private int id;
     @Column(unique=true)
     private String name;
-    private String role;
+    private String roleId;
     private String email;
     private String cryptedPassword;
     @Column(unique=true)
@@ -59,16 +59,16 @@ public class EVAccount implements Account {
     }
 
     @Override
-    public String getRole() {
-        return role;
+    public String getRoleId() {
+        return roleId;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 
     public ChatColor getColor() {
-        return nameColors.get(getRole());
+        return nameColors.get(getRoleId());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class EVAccount implements Account {
 
     @Override
     public String[] getRoles() {
-        String role = getRole();
+        String role = getRoleId();
         return rolesInheritance.get(role);
     }
 

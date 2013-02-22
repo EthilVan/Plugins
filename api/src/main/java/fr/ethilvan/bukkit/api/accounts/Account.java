@@ -8,7 +8,7 @@ public interface Account {
 
     public String getName();
 
-    public String getRole();
+    public String getRoleId();
 
     public String[] getRoles();
 

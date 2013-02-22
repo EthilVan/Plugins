@@ -86,7 +86,7 @@ public class EVPermissions implements Permissions {
     public Set<String> getNodes(Player player) {
         String dimension = EthilVan.getDimensions().get(player).getName();
         Account account = EthilVan.getAccounts().get(player);
-        String real_role = account.getRole();
+        String real_role = account.getRoleId();
         String[] roles = account.getRoles();
         Set<String> pseudoRoles = EthilVan.getAccounts()
                 .getPseudoRoles(player);

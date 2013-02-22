@@ -45,7 +45,7 @@ public class Visitor implements Account {
     }
 
     @Override
-    public String getRole() {
+    public String getRoleId() {
         return "visitor";
     }
 
@@ -67,7 +67,7 @@ public class Visitor implements Account {
     @Override
     public String[] getRoles() {
         String[] roles = new String[1];
-        roles[0] = getRole();
+        roles[0] = getRoleId();
         return roles;
     }
 

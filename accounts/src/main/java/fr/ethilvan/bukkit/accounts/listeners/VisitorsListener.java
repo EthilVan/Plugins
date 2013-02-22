@@ -23,7 +23,8 @@ public class VisitorsListener implements Listener {
     
     private boolean isVisitor(Player player) {
         Accounts am = EthilVan.getAccounts();
-        return am.isVisitor(player) || am.get(player).getRole().equals("ancien");
+        return am.isVisitor(player) ||
+                am.get(player).getRoleId().equals("ancien");
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
