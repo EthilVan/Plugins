@@ -18,12 +18,10 @@
 		<dependency>
 			<groupId>fr.ethilvan.bukkit</groupId>
 			<artifactId>api</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.dynmap</groupId>
 			<artifactId>dynmap-api</artifactId>
-			<version>0.80</version>
 		</dependency>
 	</dependencies>
 

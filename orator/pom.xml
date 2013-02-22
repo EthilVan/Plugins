@@ -18,7 +18,6 @@
 		<dependency>
 			<groupId>fr.ethilvan.bukkit</groupId>
 			<artifactId>api</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
