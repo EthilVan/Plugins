@@ -13,10 +13,10 @@ import fr.aumgn.bukkitutils.command.NestedCommands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 
-@NestedCommands("evmisc")
+@NestedCommands({ "evmisc", "book" })
 public class BookCommands extends MiscCommands {
 
-    @Command(name="setauthor", min = 1, max = 1)
+    @Command(name="author", min = 0, max = 1)
     public void setAuthor(Player sender, CommandArgs args) {
         ItemStack stack = sender.getItemInHand();
 
@@ -26,13 +26,19 @@ public class BookCommands extends MiscCommands {
 
         BookMeta meta = (BookMeta) stack.getItemMeta();
 
+        if (args.length() == 0) {
+            sender.sendMessage(ChatColor.GREEN + "L'auteur de ce livre est "
+                    + meta.getAuthor());
+            return;
+        }
+
         String author = args.get(0);
         meta.setAuthor(author);
         stack.setItemMeta(meta);
         sender.sendMessage(ChatColor.GREEN + "Auteur redéfini à " + author + ".");
     }
 
-    @Command(name="setpages", min = 1, max = -1)
+    @Command(name="pages", min = 1, max = -1)
     public void setPages(Player sender, CommandArgs args) {
         ItemStack stack = sender.getItemInHand();
 
@@ -48,7 +54,24 @@ public class BookCommands extends MiscCommands {
         sender.sendMessage(ChatColor.GREEN + "Pages redéfinies.");
     }
 
-    @Command(name="settitle", min = 1, max = 1)
+    @Command(name="page", min = 1, max = 1)
+    public void setPage(Player sender, CommandArgs args) {
+        ItemStack stack = sender.getItemInHand();
+
+        if (stack.getType() != Material.WRITTEN_BOOK) {
+            throw new CommandError("Item must be a Written Book.");
+        }
+
+        BookMeta meta = (BookMeta) stack.getItemMeta();
+
+        int page = args.getInteger(0).value();
+        String data = args.get(1);
+        meta.setPage(page, data);
+        sender.sendMessage(ChatColor.GREEN + "Page " + page + " redéfinie");
+        stack.setItemMeta(meta);
+    }
+
+    @Command(name="title", min = 0, max = 1)
     public void setTitle(Player sender, CommandArgs args) {
         ItemStack stack = sender.getItemInHand();
 
@@ -57,6 +80,12 @@ public class BookCommands extends MiscCommands {
         }
 
         BookMeta meta = (BookMeta) stack.getItemMeta();
+
+        if (args.length() == 0) {
+            sender.sendMessage(ChatColor.GREEN + "Le titre de ce livre est "
+                    + meta.getTitle());
+            return;
+        }
 
         String title = args.get(0);
         meta.setTitle(title);

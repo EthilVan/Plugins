@@ -8,21 +8,31 @@ depend: [EV-API]
 commands:
     evmisc:
         description: "Commande principale."
-        usage: ""
+        usage: "book"
         aliases: ["misc"]
 
-    "evmisc setauthor":
-        description: "RedÈfinis l'auteur"
-        usage: ""
-        aliases: ["setauthor"]
-        permission: "ev.misc.commands.setauthor"
-    "evmisc setpages":
-        description: "RedÈfinis les pages"
-        usage: ""
-        aliases: ["setpages"]
-        permission: "ev.misc.commands.setpages"
-    "evmisc settitle":
-        description: "RedÈfinis le titre du livre"
-        usage: ""
-        aliases: ["settitle"]
-        permission: "ev.misc.commands.settitle"
+     # Livre
+    "evmisc book":
+        description: "Commande pour les livres"
+        usage: "<author|title|pages|page>"
+        aliases: ["book"]
+    "evmisc book author":
+        description: "Red√©finis l'auteur"
+        usage: "<author>"
+        aliases: ["author"]
+        permission: "ev.misc.commands.author"
+    "evmisc book pages":
+        description: "Red√©finis les pages"
+        usage: "<pages...>"
+        aliases: ["pages"]
+        permission: "ev.misc.commands.pages"
+    "evmisc book page":
+        description: "Red√©finis une page"
+        usage: "[page] [data]"
+        aliases: ["page"]
+        permission: "ev.misc.commands.page"
+    "evmisc book title":
+        description: "Red√©finis le titre du livre"
+        usage: "<title>"
+        aliases: ["title"]
+        permission: "ev.misc.commands.title"
