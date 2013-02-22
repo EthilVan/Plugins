@@ -23,9 +23,9 @@ public class EVAccount implements Account {
     private static Map<String, ChatColor> nameColors;
 
     public static void initConfig(EVAccounts plugin) {
-        /*AccountsConfig config = new AccountsConfig(plugin);
+        AccountsConfig config = new AccountsConfig(plugin);
         rolesInheritance = config.getRolesInheritance();
-        nameColors = config.getRolesColors();*/
+        nameColors = config.getRolesColors();
     }
 
     @Id
