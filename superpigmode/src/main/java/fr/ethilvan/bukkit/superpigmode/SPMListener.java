@@ -1,4 +1,4 @@
-package fr.ethilvanbukkit.bukkit.superpigmode;
+package fr.ethilvan.bukkit.superpigmode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.ethilvan.bukkit.api.event.dimensions.DimensionEnterEvent;
-import fr.ethilvanbukkit.bukkit.superpigmode.SuperPigMode.TurnOffReason;
+import fr.ethilvan.bukkit.superpigmode.SuperPigMode.TurnOffReason;
 
 public class SPMListener implements Listener {
 

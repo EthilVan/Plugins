@@ -1,4 +1,4 @@
-package fr.ethilvanbukkit.bukkit.superpigmode;
+package fr.ethilvan.bukkit.superpigmode;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

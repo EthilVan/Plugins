@@ -1,4 +1,4 @@
-package fr.ethilvanbukkit.bukkit.superpigmode;
+package fr.ethilvan.bukkit.superpigmode;
 
 import java.util.Locale;
 
@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
-import fr.ethilvanbukkit.bukkit.superpigmode.SuperPigMode.TurnOffReason;
+import fr.ethilvan.bukkit.superpigmode.SuperPigMode.TurnOffReason;
 
 public class SuperPigModePlugin extends JavaPlugin {
 

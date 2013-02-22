@@ -1,4 +1,4 @@
-package fr.ethilvanbukkit.bukkit.superpigmode;
+package fr.ethilvan.bukkit.superpigmode;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

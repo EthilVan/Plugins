@@ -1,4 +1,4 @@
-package fr.ethilvanbukkit.bukkit.superpigmode;
+package fr.ethilvan.bukkit.superpigmode;
 
 import java.util.List;
 
