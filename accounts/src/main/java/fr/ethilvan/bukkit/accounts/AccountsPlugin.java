@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,8 +14,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
+import fr.aumgn.bukkitutils.gson.GsonLoadException;
+import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.ethilvan.bukkit.accounts.listeners.AccountsListener;
 import fr.ethilvan.bukkit.accounts.listeners.NamePlatePacketListener;
 import fr.ethilvan.bukkit.accounts.listeners.VisitorsListener;
@@ -41,10 +46,16 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
     public void onEnable() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        AccountsConfig config = null;
+        AccountsConfig config;
+        try {
+            config = getLoader().loadOrCreate("config.json",
+                    AccountsConfig.class);
+        } catch (GsonLoadException exc) {
+            getLogger().log(Level.SEVERE, "Unable to load portals.json", exc);
+            config = new AccountsConfig();
+        }
 
         Accounts accounts = new EVAccounts(this, config);
-        //EVAccount.initConfig(this);
         EthilVan.registerAccounts(accounts);
 
         Listener accountsListener = new AccountsListener(this);
@@ -60,6 +71,13 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
         registration.register(new AccountsCommands());
 
         Bukkit.getScheduler().runTaskTimer(this, this, 6000, 6000);
+    }
+
+    private GsonLoader getLoader() {
+        Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
+        return new GsonLoader(gson, this);
     }
 
     @Override
