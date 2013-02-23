@@ -2,7 +2,6 @@ package fr.ethilvan.bukkit.travels;
 
 import net.milkbowl.vault.economy.Economy;
 
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -54,8 +53,8 @@ public class TravelsRunnable implements Runnable {
             }
 
             if (!player.hasPermission("travels.use")) {
-                player.sendMessage(ChatColor.RED + "Vous n'avez pas la" +
-                        " permission d'utiliser les voyages.");
+                player.sendMessage(plugin.getMessages()
+                        .get("runnable.hasNotPermission"));
                 continue;
             }
 
@@ -67,7 +66,8 @@ public class TravelsRunnable implements Runnable {
             }
 
             if (!eco.has(player.getName(), price)) {
-                player.sendMessage(ChatColor.RED + "Vous n'avez pas assez d'argent.");
+                player.sendMessage(plugin.getMessages()
+                        .get("runnable.hasNotEnoughMoney"));
                 continue;
             }
 
@@ -75,11 +75,11 @@ public class TravelsRunnable implements Runnable {
             player.teleport(destinationPort.getDestination());
             int travelprice = (int) (price * 100);
             if (price != 0) {
-                player.sendMessage(ChatColor.GREEN + "Merci d'avoir utilisé " +
-                        "le service de transport Ethil-Vannien pour la modeste somme de " + travelprice + " pièces de cuivre.");
+                player.sendMessage(plugin.getMessages()
+                        .get("runnable.thanksForUse_1"));
             } else {
-                player.sendMessage(ChatColor.GREEN + "Merci d'avoir utilisé " +
-                    "le service de transport Ethil-Vannien.");
+                player.sendMessage(plugin.getMessages()
+                        .get("runnable.thanksForUse_2", travelprice));
             }
 
             if (price == 0) {

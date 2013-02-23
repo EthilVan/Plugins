@@ -21,11 +21,11 @@ public class TravelCommands extends TravelsCommands{
         String travelName = args.get(0);
 
         if (travels.contains(travelName)) {
-            throw new CommandError("Le voyage " + travelName + " existe déjà.");
+            throw new CommandError(get("commands.travel.alreadyExist", travelName));
         }
 
         travels.create(travelName);
-        player.sendMessage(ChatColor.GREEN + "Voyage créé avec le nom : " + travelName + ".");
+        player.sendMessage(get("commands.travel.create", travelName));
 
         if (args.length() == 3) {
             Travel travel = travels.get(travelName);
@@ -34,18 +34,18 @@ public class TravelCommands extends TravelsCommands{
 
             travel.setDeparture(depart);
             travel.setDestination(dest);
-            player.sendMessage(ChatColor.GREEN + "Départ du voyage "
-                    + travel.getName() + " défini au port " + depart.getName() + ".");
-            player.sendMessage(ChatColor.GREEN + "Destination du voyage "
-                    + travel.getName() + " définie au port " + dest.getName() + ".");
+            player.sendMessage(get("commands.travel.departure",
+                    travel.getName(), depart.getName()));
+            player.sendMessage(get("commands.travel.destination",
+                    travel.getName(), dest.getName()));
         }
 
         if (args.hasArgFlag('p')) {
             double price = args.getDouble('p').value();
             Travel travel = travels.get(travelName);
             travel.setPrice(price);
-            player.sendMessage(ChatColor.GREEN + "Prix du voyage " +
-                    travel.getName() + " défini à " + price + ".");
+            player.sendMessage(get("commands.travel.price",
+                    travel.getName(), price));
         }
 
         if (args.hasArgFlag('s')) {
@@ -58,19 +58,19 @@ public class TravelCommands extends TravelsCommands{
                 hours = Integer.parseInt(parts[0]);
                 mn = Integer.parseInt(parts[1]);
             } catch (NumberFormatException e) {
-                throw new CommandError("Format d'horaire inconnu : (" + schedule + "), attendu hh:mn");
+                throw new CommandError(get("commands.travel.schedule.timeError.format",
+                        schedule));
             }
-
             if (hours > 23) {
-                throw new CommandError("L'heure doit être comprise entre 0 et 23.");
+                throw new CommandError(get("commands.travel.schedule.timeError.minutes"));
             }
             if (mn > 59) {
-                throw new CommandError("Les minutes doivent être comprises entre 0 et 59.");
+                throw new CommandError(get("commands.travel.schedule.timeError.hour"));
             }
             int travelSchedule = hours * 60 + mn;
             travel.setSchedule(TimeUtils.travelMinutesToTicks(travelSchedule));
-            player.sendMessage(ChatColor.GREEN + "Horaire du voyage : " +
-                    travel.getName() + " défini à " + hours + ":" + mn + ".");
+            player.sendMessage(get("commands.travel.schedule",
+                    travel.getName(), hours, mn));
         }
     }
 
@@ -78,8 +78,7 @@ public class TravelCommands extends TravelsCommands{
     public void remove(Player player, CommandArgs args) {  
         Travel travel = args.get(0, Travel).value();
         plugin.getTravels().remove(travel);
-        player.sendMessage(ChatColor.GREEN + "Voyage " + travel.getName()
-                + " supprimé avec succès.");
+        player.sendMessage(get("commands.travel.remove", travel.getName()));
     }
 
     @Command(name = "departure", min = 2, max = 2)
@@ -88,8 +87,8 @@ public class TravelCommands extends TravelsCommands{
         Port port = args.get(1, Port).value();
 
         travel.setDeparture(port);
-        player.sendMessage(ChatColor.GREEN + "Départ du voyage "
-                + travel.getName() + " défini au port " + port.getName() + ".");
+        player.sendMessage(get("commands.travel.departure",
+                travel.getName(), port.getName()));
     }
 
     @Command(name = "destination", min = 2, max = 2)
@@ -98,8 +97,8 @@ public class TravelCommands extends TravelsCommands{
         Port port = args.get(1, Port).value();
 
         travel.setDestination(port);
-        player.sendMessage(ChatColor.GREEN + "Destination du voyage "
-                + travel.getName() + " définie au port " + port.getName() + ".");
+        player.sendMessage(get("commands.travel.destination",
+                travel.getName(), port.getName()));
     }
 
     @Command(name = "schedule", min = 2, max = 2)
@@ -108,8 +107,8 @@ public class TravelCommands extends TravelsCommands{
 
         if (args.get(1).equalsIgnoreCase("reset")) {
             travel.setSchedule(-1);
-            player.sendMessage(ChatColor.GREEN +
-                    "Horaire du voyage " + travel.getName() + " supprimé avec succès.");
+            player.sendMessage(get("commands.travel.schedule",
+                    travel.getName()));
             return;
         }
 
@@ -121,18 +120,19 @@ public class TravelCommands extends TravelsCommands{
             hours = Integer.parseInt(parts[0]);
             mn = Integer.parseInt(parts[1]);
         } catch (NumberFormatException e) {
-            throw new CommandError("Format d'horaire inconnu : (" + schedule + "), attendu hh:mn");
+            throw new CommandError(get("commands.travel.schedule.timeError.format",
+                    schedule));
         }
         if (hours > 23) {
-            throw new CommandError("L'heure doit être comprise entre 0 et 23.");
+            throw new CommandError(get("commands.travel.schedule.timeError.minutes"));
         }
         if (mn > 59) {
-            throw new CommandError("Les minutes doivent être comprises entre 0 et 59.");
+            throw new CommandError(get("commands.travel.schedule.timeError.hour"));
         }
         int travelSchedule = hours * 60 + mn;
         travel.setSchedule(TimeUtils.travelMinutesToTicks(travelSchedule));
-        player.sendMessage(ChatColor.GREEN + "Horaire du voyage : " +
-                travel.getName() + " défini à " + hours + ":" + mn + ".");
+        player.sendMessage(get("commands.travel.schedule",
+                travel.getName(), hours, mn));
     }
 
     @Command(name = "price", min = 2, max = 2)
@@ -141,8 +141,7 @@ public class TravelCommands extends TravelsCommands{
         double price = args.getDouble(1).value();
 
         travel.setPrice(price);
-        player.sendMessage(ChatColor.GREEN + "Prix du voyage " +
-                travel.getName() + " défini à " + price + "."); 
+        player.sendMessage(get("commands.travel.price", travel.getName(), price));
     }
 
     @Command(name = "info", min = 1, max = 1)
@@ -175,7 +174,7 @@ public class TravelCommands extends TravelsCommands{
     @Command(name = "list")
     public void list(Player player, CommandArgs args) {
         if (plugin.getTravels().isEmpty()) {
-            player.sendMessage(ChatColor.RED + "Aucun voyage n'a été créé pour l'instant.");
+            player.sendMessage(get("commands.travel.isEmpty"));
         }
 
         for (Travel travel : plugin.getTravels()) {
@@ -189,10 +188,10 @@ public class TravelCommands extends TravelsCommands{
 
         if (travel.isActive()) {
             travel.setActive(false);
-            player.sendMessage("Voyage désactivé");
+            player.sendMessage(get("commands.travel.inactive"));
         } else {
             travel.setActive(true);
-            player.sendMessage("Voyage activé");
+            player.sendMessage(get("commands.travel.active"));
         }
     }
 }

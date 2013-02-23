@@ -30,19 +30,18 @@ public class PortCommands extends TravelsCommands {
         String portName = args.get(0);
 
         if (ports.contains(portName)) {
-            throw new CommandError("Le port " + portName + " existe déjà.");
+            throw new CommandError(get("commands.port.alreadyExist", portName));
         }
 
         ports.create(portName, player.getWorld());
-        player.sendMessage(ChatColor.GREEN + "Port créé avec le nom : " + portName + ".");
+        player.sendMessage(get("commands.port.create", portName));
     }
 
     @Command(name = "remove", min = 1, max = 1)
     public void remove(Player player, CommandArgs args) {
         Port port = args.get(0, Port).value();
         plugin.getPorts().remove(port);
-        player.sendMessage(ChatColor.GREEN + "Port : " + port.getName()
-                + " supprimé avec succès.");
+        player.sendMessage(get("commands.port.remove", port.getName()));
     }
 
     @Command(name = "departure", min = 1, max = 1)
@@ -50,15 +49,14 @@ public class PortCommands extends TravelsCommands {
         Port port = args.get(0, Port).value();
         Region region = getRegion(player);
         port.setDeparture(region); 
-        player.sendMessage(ChatColor.GREEN + "Zone de départ pour le port " + port.getName() + " définie avec succès.");
+        player.sendMessage(get("commands.port.departure", port.getName()));
     }
 
     @Command(name = "destination", min = 1, max = 1)
     public void setDestination(Player player, CommandArgs args) {
         Port port = args.get(0, Port).value();
         port.setPosition(player.getLocation());
-        player.sendMessage(ChatColor.GREEN + "Point d'arrivée pour le port " +
-                port.getName() + " défini avec succès.");
+        player.sendMessage(get("commands.port.destination", port.getName()));
     }
 
     @Command(name = "info", min = 1, max = 1)
@@ -74,7 +72,7 @@ public class PortCommands extends TravelsCommands {
     @Command(name = "list")
     public void list(Player player, CommandArgs args) {
         if (plugin.getPorts().isEmpty()) {
-            player.sendMessage("Aucun port n'a été créé pour l'instant.");
+            player.sendMessage(get("commands.isEmpty"));
         }
 
         for (Port port : plugin.getPorts()) {
@@ -94,6 +92,6 @@ public class PortCommands extends TravelsCommands {
         RegionSelector sel = new CuboidRegionSelector(weWorld, min, max);
         session.setRegionSelector(weWorld, sel);
         session.dispatchCUISelection(we.wrapPlayer(player));
-        player.sendMessage(ChatColor.GREEN + "Zone de départ sélectionnée");
+        player.sendMessage(get("commands.port.select"));
     }
 }

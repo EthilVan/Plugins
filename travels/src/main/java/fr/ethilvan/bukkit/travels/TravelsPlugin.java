@@ -1,5 +1,6 @@
 package fr.ethilvan.bukkit.travels;
 
+import java.util.Locale;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -13,6 +14,8 @@ import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
 import fr.aumgn.bukkitutils.gson.typeadapter.WorldTypeAdapterFactory;
+import fr.aumgn.bukkitutils.localization.Localization;
+import fr.aumgn.bukkitutils.localization.PluginMessages;
 import fr.ethilvan.bukkit.travels.commands.TravelsCommands;
 import fr.ethilvan.bukkit.travels.travels.Ports;
 import fr.ethilvan.bukkit.travels.travels.Travels;
@@ -22,9 +25,13 @@ public class TravelsPlugin extends JavaPlugin {
     private Travels travels;
     private Ports ports;
     private TravelsConfig config;
+    private PluginMessages messages;
 
     @Override
     public void onEnable() {
+        Localization localization = new Localization(this, this.getDataFolder(),
+                Locale.FRANCE, Locale.FRANCE);      
+        messages = localization.get("messages");
         loadConfig();
         loadData();
 
@@ -104,5 +111,9 @@ public class TravelsPlugin extends JavaPlugin {
 
     public Ports getPorts() {
         return ports;
+    }
+
+    public PluginMessages getMessages() {
+        return messages;
     }
 }
