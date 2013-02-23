@@ -107,6 +107,6 @@ public class EVDimension implements Dimension {
     }
 
     public Iterable<String> worldsName() {
-        return worlds.values();
+        return worlds.keySet();
     }
 }
