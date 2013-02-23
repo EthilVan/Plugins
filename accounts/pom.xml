@@ -13,6 +13,10 @@
 	<name>Accounts</name>
 	<description>EthilVan accounts management plugin</description>
 
+	<properties>
+		<maven.test.skip>false</maven.test.skip>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>fr.ethilvan.bukkit</groupId>

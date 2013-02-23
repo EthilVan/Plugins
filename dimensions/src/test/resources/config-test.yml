@@ -1,0 +1,24 @@
+main: survival
+survival:
+    difficulty: HARD
+    gamemode: SURVIVAL
+    flags:
+        - tag1
+        - tag3
+    main: world1
+    worlds:
+        world1: "World 1"
+        world2: "World 2"
+        world3: "World 3"
+creative:
+    name: 'Creative !'
+    difficulty: PEACEFUL
+    gamemode: CREATIVE
+    flags:
+        - tag2
+        - tag3
+    main: world4
+    worlds:
+        world4: "World 4"
+        world5: "World 5"
+

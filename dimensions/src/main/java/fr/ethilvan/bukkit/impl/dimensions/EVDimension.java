@@ -38,7 +38,7 @@ public class EVDimension implements Dimension {
                 section.getConfigurationSection("worlds").getValues(false);
         worlds = new HashMap<String, String>();
         for (Entry<String, Object> entry : worldsSection.entrySet()) {
-            worldsSection.put(entry.getKey(), entry.getValue().toString());
+            worlds.put(entry.getKey(), entry.getValue().toString());
         }
 
         if (section.isString("main")) {
@@ -70,7 +70,7 @@ public class EVDimension implements Dimension {
 
     @Override
     public String getWorldDisplayName(World world) {
-        return worlds.get(world);
+        return worlds.get(world.getName());
     }
 
     @Override
@@ -97,7 +97,7 @@ public class EVDimension implements Dimension {
 
     @Override
     public Iterator<World> iterator() {
-        return Iterators.transform(worlds.values().iterator(),
+        return Iterators.transform(worlds.keySet().iterator(),
                 new Function<String, World>() {
             @Override
             public World apply(String worldName) {

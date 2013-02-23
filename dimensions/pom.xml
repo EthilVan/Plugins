@@ -14,10 +14,22 @@
 	<name>Dimensions</name>
 	<description>Multi-World management plugin</description>
 
+	<properties>
+		<maven.test.skip>false</maven.test.skip>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>fr.ethilvan.bukkit</groupId>
 			<artifactId>api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>fr.aumgn</groupId>
+			<artifactId>mockbukkit</artifactId>
 		</dependency>
 	</dependencies>
 
