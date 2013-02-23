@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
+import fr.ethilvan.bukkit.api.accounts.Role;
 
 @Entity
 @Table(name="visitors")
@@ -45,8 +47,8 @@ public class Visitor implements Account {
     }
 
     @Override
-    public String getRoleId() {
-        return "visitor";
+    public Role getRole() {
+        return EthilVan.getAccounts().getRole("visitor");
     }
 
     @Override
@@ -62,13 +64,6 @@ public class Visitor implements Account {
     @Override
     public String getMinecraftName() {
         return getName();
-    }
-
-    @Override
-    public String[] getRoles() {
-        String[] roles = new String[1];
-        roles[0] = getRoleId();
-        return roles;
     }
 
     @Override

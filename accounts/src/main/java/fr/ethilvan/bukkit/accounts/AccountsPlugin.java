@@ -41,7 +41,9 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
     public void onEnable() {
         PluginManager pm = Bukkit.getPluginManager();
 
-        Accounts accounts = new EVAccounts(this);
+        AccountsConfig config = null;
+
+        Accounts accounts = new EVAccounts(this, config);
         //EVAccount.initConfig(this);
         EthilVan.registerAccounts(accounts);
 

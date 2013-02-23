@@ -9,23 +9,25 @@ import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
 public interface Accounts {
 
-    public Account getByName(String name);
+    Account getByName(String name);
 
-    public Account getByMinecraftName(String name);
+    Account getByMinecraftName(String name);
 
-    public Account get(PlayerRef playerRef);
+    Account get(PlayerRef playerRef);
 
-    public Account get(Player player);
+    Account get(Player player);
 
-    public List<Account> getByPartialName(String name);
+    List<Account> getByPartialName(String name);
 
-    public Set<String> getPseudoRoles(Player player);
+    Role getRole(String id);
 
-    public void addPseudoRole(Player player, String pseudorole);
+    Set<String> getPseudoRoles(Player player);
 
-    public void removePseudoRole(Player player, String pseudorole);
+    void addPseudoRole(Player player, String pseudorole);
 
-    public boolean isVisitor(Player player);
+    void removePseudoRole(Player player, String pseudorole);
 
-    public List<? extends Account> getVisitors();
+    boolean isVisitor(Player player);
+
+    List<? extends Account> getVisitors();
 }

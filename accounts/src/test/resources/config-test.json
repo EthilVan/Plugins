@@ -1,0 +1,20 @@
+{
+	"roles": {
+		"admin": {
+			name: "Admin",
+			color: "DARK_RED",
+			subrole: "modo"
+		},
+
+		"modo": {
+			name: "Modo",
+			color: "BLUE",
+			subrole: "basic"
+		},
+
+		"basic": {
+			name: "Basic",
+			color: "WHITE"
+		}
+	}
+}

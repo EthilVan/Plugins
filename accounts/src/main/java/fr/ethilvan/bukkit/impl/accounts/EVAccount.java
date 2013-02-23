@@ -1,7 +1,6 @@
 package fr.ethilvan.bukkit.impl.accounts;
 
 import java.sql.Timestamp;
-import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,20 +12,13 @@ import javax.persistence.Table;
 import org.bukkit.ChatColor;
 
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
+import fr.ethilvan.bukkit.api.accounts.Role;
 
 @Entity
 @Table(name="accounts")
 public class EVAccount implements Account {
-
-    private static Map<String, String[]>  rolesInheritance;
-    private static Map<String, ChatColor> nameColors;
-
-    public static void initConfig(EVAccounts plugin) {
-        AccountsConfig config = new AccountsConfig(plugin);
-        rolesInheritance = config.getRolesInheritance();
-        nameColors = config.getRolesColors();
-    }
 
     @Id
     private int id;
@@ -58,7 +50,6 @@ public class EVAccount implements Account {
         this.name = name;
     }
 
-    @Override
     public String getRoleId() {
         return roleId;
     }
@@ -67,24 +58,19 @@ public class EVAccount implements Account {
         this.roleId = roleId;
     }
 
-    public ChatColor getColor() {
-        return nameColors.get(getRoleId());
+    @Override
+    public Role getRole() {
+        return EthilVan.getAccounts().getRole(roleId);
     }
 
     @Override
     public String getColoredNamePlate() {
-        return getColor() + getName();
+        return getRole().getColor() + getName();
     }
 
     @Override
     public String getColoredName() {
         return getColoredNamePlate() + ChatColor.WHITE;
-    }
-
-    @Override
-    public String[] getRoles() {
-        String role = getRoleId();
-        return rolesInheritance.get(role);
     }
 
     public String getEmail() {

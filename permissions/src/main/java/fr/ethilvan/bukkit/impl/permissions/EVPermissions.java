@@ -1,5 +1,6 @@
 package fr.ethilvan.bukkit.impl.permissions;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,7 @@ import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
+import fr.ethilvan.bukkit.api.accounts.Role;
 import fr.ethilvan.bukkit.api.permissions.Permissions;
 import fr.ethilvan.bukkit.permissions.PermissionsPlugin;
 
@@ -30,12 +32,14 @@ public class EVPermissions implements Permissions {
 
     @Override
     public Set<String> getPermissionsList(String role) {
-        return getSpecificPermissions("", role, true);
+        return getPermissionsList(role, "");
     }
 
     @Override
     public Set<String> getPermissionsList(String role, String dimension) {
-        return getSpecificPermissions(dimension, role, true);
+        HashSet<String> nodes = new HashSet<String>();
+        addSpecificPermissions(nodes, dimension, role, true);
+        return nodes;
     }
 
     @Override
@@ -67,8 +71,37 @@ public class EVPermissions implements Permissions {
         }
     }
 
-    public Set<String> getSpecificPermissions(String dimension, String role,
-            boolean inherited) {
+    private Set<String> getNodes(Player player) {
+        String dimension = EthilVan.getDimensions().get(player).getName();
+        Account account = EthilVan.getAccounts().get(player);
+        Role role = account.getRole();
+        Set<Role> subroles = role.getSubroles();
+        Set<String> pseudoRoles = EthilVan.getAccounts()
+                .getPseudoRoles(player);
+
+        HashSet<String> set = new HashSet<String>();
+        addRoleNodes(set, dimension, role, false, pseudoRoles);
+        for (Role subrole : subroles) {
+            addRoleNodes(set, dimension, subrole, true, pseudoRoles);
+        }
+        return set;
+    }
+
+    private void addRoleNodes(Collection<String> nodes, String dimension,
+            Role role, boolean inherited, Set<String> pseudoRoles) {
+        nodes.add(GROUP_PREFIX + role.getId());
+        addSpecificPermissions(nodes, "", role.getId(), inherited);
+        addSpecificPermissions(nodes, dimension, role.getId(), inherited);
+        for (String pseudoRole : pseudoRoles) {
+            String computedRole = role.getId() + ":" + pseudoRole;
+            nodes.add(GROUP_PREFIX + computedRole);
+            addSpecificPermissions(nodes, "", computedRole, inherited);
+            addSpecificPermissions(nodes, dimension, computedRole, inherited);
+        }
+    }
+
+    private void addSpecificPermissions(Collection<String> nodes,
+            String dimension, String role, boolean inherited) {
         ExpressionList<EVPermission> expression = plugin.getDatabase()
                 .find(EVPermission.class)
                 .where()
@@ -76,35 +109,8 @@ public class EVPermissions implements Permissions {
                 .eq("role", role);
         if (inherited) { expression = expression.eq("inheritable", true); }
         List<EVPermission> list = expression.findList();
-        HashSet<String> set = new HashSet<String>();
         for (EVPermission perm : list) {
-            set.add(perm.getNode());
+            nodes.add(perm.getNode());
         }
-        return set;
-    }
-
-    public Set<String> getNodes(Player player) {
-        String dimension = EthilVan.getDimensions().get(player).getName();
-        Account account = EthilVan.getAccounts().get(player);
-        String real_role = account.getRoleId();
-        String[] roles = account.getRoles();
-        Set<String> pseudoRoles = EthilVan.getAccounts()
-                .getPseudoRoles(player);
-        HashSet<String> set = new HashSet<String>();
-        for (String role : roles) {
-            boolean inherited = !role.equals(real_role);
-            set.add(GROUP_PREFIX + role);
-            set.addAll(getSpecificPermissions("", role, inherited));
-            set.addAll(getSpecificPermissions(dimension, role, inherited));
-            for (String pseudoRole : pseudoRoles) {
-                String computedRole = role + ":" + pseudoRole;
-                set.add(GROUP_PREFIX + computedRole);
-                set.addAll(getSpecificPermissions("", computedRole,
-                        inherited));
-                set.addAll(getSpecificPermissions(dimension, computedRole,
-                        inherited));
-            }
-        }
-        return set;
     }
 }
