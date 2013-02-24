@@ -31,46 +31,19 @@ public class TravelCommands extends TravelsCommands{
             Travel travel = travels.get(travelName);
             Port depart = args.get(1, Port).value();
             Port dest = args.get(2, Port).value();
-
-            travel.setDeparture(depart);
-            travel.setDestination(dest);
-            player.sendMessage(get("commands.travel.departure",
-                    travel.getName(), depart.getName()));
-            player.sendMessage(get("commands.travel.destination",
-                    travel.getName(), dest.getName()));
+            setDeparture(travel, depart, player);
+            setDestination(travel, dest, player);
         }
 
         if (args.hasArgFlag('p')) {
             double price = args.getDouble('p').value();
             Travel travel = travels.get(travelName);
-            travel.setPrice(price);
-            player.sendMessage(get("commands.travel.price",
-                    travel.getName(), price));
+            setPrice(travel, price, player);
         }
 
         if (args.hasArgFlag('s')) {
             Travel travel = travels.get(travelName);
-            String schedule = args.get('s');
-            String[] parts = schedule.split(":");
-            int hours = 0;
-            int mn = 0;
-            try {
-                hours = Integer.parseInt(parts[0]);
-                mn = Integer.parseInt(parts[1]);
-            } catch (NumberFormatException e) {
-                throw new CommandError(get("commands.travel.schedule.timeError.format",
-                        schedule));
-            }
-            if (hours > 23) {
-                throw new CommandError(get("commands.travel.schedule.timeError.minutes"));
-            }
-            if (mn > 59) {
-                throw new CommandError(get("commands.travel.schedule.timeError.hour"));
-            }
-            int travelSchedule = hours * 60 + mn;
-            travel.setSchedule(TimeUtils.travelMinutesToTicks(travelSchedule));
-            player.sendMessage(get("commands.travel.schedule",
-                    travel.getName(), hours, mn));
+            setSchedule(args.get('s'), travel, player);
         }
     }
 
@@ -85,20 +58,14 @@ public class TravelCommands extends TravelsCommands{
     public void departure(Player player, CommandArgs args) { 
         Travel travel = args.get(0, Travel).value();
         Port port = args.get(1, Port).value();
-
-        travel.setDeparture(port);
-        player.sendMessage(get("commands.travel.departure",
-                travel.getName(), port.getName()));
+        setDeparture(travel, port, player);
     }
 
     @Command(name = "destination", min = 2, max = 2)
     public void destination(Player player, CommandArgs args) { 
         Travel travel = args.get(0, Travel).value();
         Port port = args.get(1, Port).value();
-
-        travel.setDestination(port);
-        player.sendMessage(get("commands.travel.destination",
-                travel.getName(), port.getName()));
+        setDestination(travel, port, player);
     }
 
     @Command(name = "schedule", min = 2, max = 2)
@@ -111,37 +78,14 @@ public class TravelCommands extends TravelsCommands{
                     travel.getName()));
             return;
         }
-
-        String schedule = args.get(1);
-        String[] parts = schedule.split(":");
-        int hours = 0;
-        int mn = 0;
-        try {
-            hours = Integer.parseInt(parts[0]);
-            mn = Integer.parseInt(parts[1]);
-        } catch (NumberFormatException e) {
-            throw new CommandError(get("commands.travel.schedule.timeError.format",
-                    schedule));
-        }
-        if (hours > 23) {
-            throw new CommandError(get("commands.travel.schedule.timeError.minutes"));
-        }
-        if (mn > 59) {
-            throw new CommandError(get("commands.travel.schedule.timeError.hour"));
-        }
-        int travelSchedule = hours * 60 + mn;
-        travel.setSchedule(TimeUtils.travelMinutesToTicks(travelSchedule));
-        player.sendMessage(get("commands.travel.schedule",
-                travel.getName(), hours, mn));
+        setSchedule(args.get(1), travel, player);
     }
 
     @Command(name = "price", min = 2, max = 2)
     public void price(Player player, CommandArgs args) {  
         Travel travel = args.get(0, Travel).value();
         double price = args.getDouble(1).value();
-
-        travel.setPrice(price);
-        player.sendMessage(get("commands.travel.price", travel.getName(), price));
+        setPrice(travel, price, player);
     }
 
     @Command(name = "info", min = 1, max = 1)
@@ -193,5 +137,45 @@ public class TravelCommands extends TravelsCommands{
             travel.setActive(true);
             player.sendMessage(get("commands.travel.active"));
         }
+    }
+
+    private void setDeparture(Travel travel, Port port, Player player) {
+        travel.setDestination(port);
+        player.sendMessage(get("commands.travel.destination",
+                travel.getName(), port.getName()));
+    }
+
+    private void setDestination(Travel travel, Port port, Player player) {
+        travel.setDestination(port);
+        player.sendMessage(get("commands.travel.destination",
+                travel.getName(), port.getName()));
+    }
+
+    private void setPrice(Travel travel, double price, Player player) {
+        travel.setPrice(price);
+        player.sendMessage(get("commands.travel.price", travel.getName(), price));
+    }
+
+    private void setSchedule(String schedule, Travel travel, Player player) {
+        String[] parts = schedule.split(":");
+        int hours = 0;
+        int mn = 0;
+        try {
+            hours = Integer.parseInt(parts[0]);
+            mn = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            throw new CommandError(get("commands.travel.schedule.timeError.format",
+                    schedule));
+        }
+        if (hours > 23) {
+            throw new CommandError(get("commands.travel.schedule.timeError.minutes"));
+        }
+        if (mn > 59) {
+            throw new CommandError(get("commands.travel.schedule.timeError.hour"));
+        }
+        int travelSchedule = hours * 60 + mn;
+        travel.setSchedule(TimeUtils.travelMinutesToTicks(travelSchedule));
+        player.sendMessage(get("commands.travel.schedule",
+                travel.getName(), hours, mn));
     }
 }
