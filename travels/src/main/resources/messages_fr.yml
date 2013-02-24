@@ -21,7 +21,7 @@ commands.travel.schedule.timeError.format: "Format d'horaire inconnu : ({0}), at
 commands.travel.schedule.timeError.minutes: "Les minutes doivent être comprises entre 0 et 59."
 commands.travel.schedule.timeError.hour: "L'heure doit être comprises entre 0 et 23."
 commands.travel.schedule: "{green}Horaire du voyage : {0} défini à {1}:{2}."
-commands.travel.price: "{green}Prix du voyage {0} défini à [1}."
+commands.travel.price: "{green}Prix du voyage {0} défini à {1}."
 commands.travel.isEmpty: "Aucun voyage n'a été créé pour l'instant."
 commands.travel.active: "{green}Voyage activé"
 commands.travel.inactive: "{green}Voyage désactivé"
