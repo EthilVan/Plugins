@@ -7,14 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.ethilvan.bukkit.api.EthilVan;
-import fr.ethilvan.bukkit.api.accounts.Account;
 import fr.ethilvan.bukkit.api.accounts.Role;
 
 @Entity
 @Table(name="visitors")
-public class Visitor implements Account {
+public class Visitor extends AbstractAccount {
 
     @Id
     private int visitorId;
@@ -52,21 +50,15 @@ public class Visitor implements Account {
     }
 
     @Override
-    public String getColoredNamePlate() {
-        return getName();
-    }
-
-    @Override
-    public String getColoredName() {
-        return getName();
-    }
-
-    @Override
     public String getMinecraftName() {
         return getName();
     }
 
     @Override
+    public MinecraftStats getStats() {
+        return null;
+    }
+
     public Timestamp getLastMinecraftVisit() {
         return lastMinecraftVisit;
     }
@@ -74,10 +66,5 @@ public class Visitor implements Account {
     @Override
     public void setLastMinecraftVisit(Timestamp lastMinecraftVisit) {
         this.lastMinecraftVisit = lastMinecraftVisit;
-    }
-
-    @Override
-    public PlayerRef getPlayerRef() {
-        return PlayerRef.get(name);
     }
 }

@@ -1,24 +1,18 @@
 package fr.ethilvan.bukkit.api.accounts;
 
-import java.sql.Timestamp;
-
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
 public interface Account {
 
-    public String getName();
+    String getName();
 
-    public Role getRole();
+    Role getRole();
 
-    public String getColoredNamePlate();
+    String getColoredNamePlate();
 
-    public String getColoredName();
+    String getColoredName();
 
-    public String getMinecraftName();
+    String getMinecraftName();
 
-    public Timestamp getLastMinecraftVisit();
-
-    public void setLastMinecraftVisit(Timestamp time);
-
-    public PlayerRef getPlayerRef();
+    PlayerRef getPlayerRef();
 }

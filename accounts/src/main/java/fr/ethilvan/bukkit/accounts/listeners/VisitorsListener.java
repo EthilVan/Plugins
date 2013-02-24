@@ -17,7 +17,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import fr.ethilvan.bukkit.api.EthilVan;
-import fr.ethilvan.bukkit.api.accounts.Accounts;
 import fr.ethilvan.bukkit.api.accounts.Role;
 
 public class VisitorsListener implements Listener {
@@ -29,9 +28,7 @@ public class VisitorsListener implements Listener {
     }
 
     private boolean isVisitor(Player player) {
-        Accounts am = EthilVan.getAccounts();
-        return am.isVisitor(player) ||
-                am.get(player).getRole().equals(ancien);
+        return EthilVan.getAccounts().get(player).getRole().inherit(ancien);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

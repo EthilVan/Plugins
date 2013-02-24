@@ -24,8 +24,8 @@ import fr.ethilvan.bukkit.accounts.listeners.AccountsListener;
 import fr.ethilvan.bukkit.accounts.listeners.NamePlatePacketListener;
 import fr.ethilvan.bukkit.accounts.listeners.VisitorsListener;
 import fr.ethilvan.bukkit.api.EthilVan;
-import fr.ethilvan.bukkit.api.accounts.Account;
 import fr.ethilvan.bukkit.api.accounts.Accounts;
+import fr.ethilvan.bukkit.impl.accounts.AbstractAccount;
 import fr.ethilvan.bukkit.impl.accounts.EVAccount;
 import fr.ethilvan.bukkit.impl.accounts.EVAccounts;
 import fr.ethilvan.bukkit.impl.accounts.MinecraftStats;
@@ -51,7 +51,7 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
             config = getLoader().loadOrCreate("config.json",
                     AccountsConfig.class);
         } catch (GsonLoadException exc) {
-            getLogger().log(Level.SEVERE, "Unable to load portals.json", exc);
+            getLogger().log(Level.SEVERE, "Unable to load config.json", exc);
             config = new AccountsConfig();
         }
 
@@ -96,15 +96,19 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
     }
 
     public void updateStats(Player player, boolean death) {
-        Account account = EthilVan.getAccounts().get(player);
+        AbstractAccount account = (AbstractAccount) EthilVan.getAccounts()
+                .get(player);
         account.setLastMinecraftVisit(currentTime());
-        if (account instanceof EVAccount) {
-            MinecraftStats stats = ((EVAccount)account).getStats();
-            stats.updateMaxLevel(player.getLevel());
-            if (death) {
-                stats.updateDeath();
-            }
-            getDatabase().save(stats);
+
+        MinecraftStats stats = account.getStats();
+        if (stats == null) {
+            return;
         }
+
+        stats.updateMaxLevel(player.getLevel());
+        if (death) {
+            stats.updateDeath();
+        }
+        getDatabase().save(stats);
     }
 }
