@@ -73,4 +73,9 @@ public class EVRole implements Role {
     public int hashCode() {
         return getId().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return "EVRole(" + id + ")";
+    }
 }

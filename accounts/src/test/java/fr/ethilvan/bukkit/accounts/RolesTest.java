@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.junit.Before;
@@ -60,65 +62,67 @@ public class RolesTest {
     }
 
     @Test
+    public void testStrictInheritance() {
+        assertTrue(admin.inherit(admin));
+        assertFalse(admin.strictInherit(admin));
+
+        assertTrue(guest.inherit(guest));
+        assertFalse(guest.strictInherit(guest));
+    }
+
+    @Test
     public void testInheritance() {
-        assertTrue( admin.inherit(admin));
         assertTrue( admin.inherit(modo));
         assertTrue( admin.inherit(vip));
         assertTrue( admin.inherit(basic));
         assertTrue( admin.inherit(guest));
 
-        assertFalse(admin.strictInherit(admin));
-        assertTrue( admin.strictInherit(modo));
-        assertTrue( admin.strictInherit(vip));
-        assertTrue( admin.strictInherit(basic));
-        assertTrue( admin.strictInherit(guest));
-
         assertFalse(modo.inherit(admin));
-        assertTrue( modo.inherit(modo));
         assertTrue( modo.inherit(vip));
         assertTrue( modo.inherit(basic));
         assertTrue( modo.inherit(guest));
 
-        assertFalse(modo.strictInherit(admin));
-        assertFalse(modo.strictInherit(modo));
-        assertTrue( modo.strictInherit(vip));
-        assertTrue( modo.strictInherit(basic));
-        assertTrue( modo.strictInherit(guest));
-
         assertFalse(vip.inherit(admin));
         assertFalse(vip.inherit(modo));
-        assertTrue( vip.inherit(vip));
         assertTrue( vip.inherit(basic));
         assertTrue( vip.inherit(guest));
-
-        assertFalse(vip.strictInherit(admin));
-        assertFalse(vip.strictInherit(modo));
-        assertFalse(vip.strictInherit(vip));
-        assertTrue( vip.strictInherit(basic));
-        assertTrue( vip.strictInherit(guest));
 
         assertFalse(basic.inherit(admin));
         assertFalse(basic.inherit(modo));
         assertFalse(basic.inherit(vip));
-        assertTrue( basic.inherit(basic));
         assertTrue( basic.inherit(guest));
-
-        assertFalse(basic.strictInherit(admin));
-        assertFalse(basic.strictInherit(modo));
-        assertFalse(basic.strictInherit(vip));
-        assertFalse(basic.strictInherit(basic));
-        assertTrue( basic.strictInherit(guest));
 
         assertFalse(guest.inherit(admin));
         assertFalse(guest.inherit(modo));
         assertFalse(guest.inherit(vip));
         assertFalse(guest.inherit(basic));
-        assertTrue( guest.inherit(guest));
+    }
 
-        assertFalse(guest.strictInherit(admin));
-        assertFalse(guest.strictInherit(modo));
-        assertFalse(guest.strictInherit(vip));
-        assertFalse(guest.strictInherit(basic));
-        assertFalse(guest.strictInherit(guest));
+    @Test
+    public void testSubroles() {
+        Set<Role> adminSubroles = new HashSet<Role>();
+        adminSubroles.add(modo);
+        adminSubroles.add(vip);
+        adminSubroles.add(basic);
+        adminSubroles.add(guest);
+        assertEquals(adminSubroles, admin.getSubroles());
+
+        Set<Role> modoSubroles = new HashSet<Role>();
+        modoSubroles.add(vip);
+        modoSubroles.add(basic);
+        modoSubroles.add(guest);
+        assertEquals(modoSubroles, modo.getSubroles());
+
+        Set<Role> vipSubroles = new HashSet<Role>();
+        vipSubroles.add(basic);
+        vipSubroles.add(guest);
+        assertEquals(vipSubroles, vip.getSubroles());
+
+        Set<Role> basicSubroles = new HashSet<Role>();
+        basicSubroles.add(guest);
+        assertEquals(basicSubroles, basic.getSubroles());
+
+        Set<Role> guestSubroles = new HashSet<Role>();
+        assertEquals(guestSubroles, guest.getSubroles());
     }
 }

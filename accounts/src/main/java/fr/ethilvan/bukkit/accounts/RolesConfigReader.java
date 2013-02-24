@@ -39,6 +39,9 @@ public class RolesConfigReader {
         for (Map.Entry<String, RoleConfig> entry : config.entrySet()) {
             String role = entry.getKey();
             String subrole = entry.getValue().getSubrole();
+            if (subrole == null) {
+                continue;
+            }
             Role subroleObj = roles.get(subrole);
             subroles(role).add(subroleObj);
             superroles(subrole).add(role);
