@@ -9,12 +9,24 @@
 		"modo": {
 			name: "Modo",
 			color: "BLUE",
+			subrole: "vip"
+		},
+
+		"vip": {
+			name: "VIP",
+			color: "GOLD",
 			subrole: "basic"
 		},
 
 		"basic": {
 			name: "Basic",
-			color: "WHITE"
+			color: "WHITE",
+			subrole: "guest"
+		},
+
+		"guest": {
+			name: "Guest",
+			color: "GRAY"
 		}
 	}
 }

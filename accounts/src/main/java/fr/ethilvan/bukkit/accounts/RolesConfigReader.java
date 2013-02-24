@@ -41,10 +41,11 @@ public class RolesConfigReader {
             String subrole = entry.getValue().getSubrole();
             Role subroleObj = roles.get(subrole);
             subroles(role).add(subroleObj);
+            superroles(subrole).add(role);
             for (String superrole : superroles(role)) {
                 subroles(superrole).add(subroleObj);
+                superroles(subrole).add(superrole);
             }
-            superroles(subrole).add(role);
         }
         for (Role _role : roles.values()) {
             EVRole role = (EVRole) _role;
