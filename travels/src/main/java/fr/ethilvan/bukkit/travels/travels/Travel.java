@@ -18,6 +18,10 @@ public class Travel {
         this.active = true;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getDeparture() {
         return departure;
     }
@@ -42,8 +46,8 @@ public class Travel {
         this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public boolean hasSchedule() {
+        return schedule != -1;
     }
 
     public int getSchedule() {

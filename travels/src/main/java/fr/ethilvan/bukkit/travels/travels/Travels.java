@@ -4,9 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.bukkit.configuration.serialization.SerializableAs;
-
-@SerializableAs("ethilvan-travel")
 public class Travels implements Iterable<Travel> {
 
     private Map<String, Travel> travels;

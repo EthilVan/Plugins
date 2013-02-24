@@ -23,7 +23,8 @@ public class TravelsCommands implements Commands {
         @Override
         public Travel value() {
             if (!plugin.getTravels().contains(string)) {
-                throw new NoSuchTravel(plugin.getMessages().get("exception.travel.notExist", string));
+                throw new NoSuchTravel(msg("exception.travel.notExist",
+                        string));
             }
 
             return plugin.getTravels().get(string);
@@ -39,7 +40,7 @@ public class TravelsCommands implements Commands {
         @Override
         public Port value() {
             if (!plugin.getPorts().contains(string)) {
-                throw new NoSuchPort(plugin.getMessages().get("exception.port.notExist", string));
+                throw new NoSuchPort(msg("exception.port.notExist", string));
             }
 
             return plugin.getPorts().get(string);
@@ -73,11 +74,11 @@ public class TravelsCommands implements Commands {
         registration.register(new TravelCommands());
     }
 
-    protected String get(String key) {
+    protected static String msg(String key) {
         return plugin.getMessages().get(key);
     }
 
-    protected String get(String key, Object... arguments) {
+    protected static String msg(String key, Object... arguments) {
         return plugin.getMessages().get(key, arguments);
     }
 }

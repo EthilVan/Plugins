@@ -5,8 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.bukkit.World;
-import org.bukkit.configuration.serialization.SerializableAs;
-@SerializableAs("ethilvan-port")
+
 public class Ports implements Iterable<Port> {
 
     private Map<String, Port> ports;

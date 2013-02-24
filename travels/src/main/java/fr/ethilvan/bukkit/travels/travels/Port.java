@@ -44,7 +44,7 @@ public class Port {
         this.name = name;
     }
 
-    public boolean departureContains(Location location) {
+    public boolean contains(Location location) {
         if (departureMin == null) {
             return false;
         }
@@ -56,11 +56,11 @@ public class Port {
         return new Vector(location).isInside(departureMin, departureMax);
     }
 
-    public boolean departureContains(Player player) {
-        return departureContains(player.getLocation());
+    public boolean contains(Player player) {
+        return contains(player.getLocation());
     }
 
-    public Location getDestination() {
+    public Location getPosition() {
         if (destination == null) {
             return null;
         }
@@ -72,7 +72,7 @@ public class Port {
         return Bukkit.getWorld(worldId);
     }
 
-    public void setDeparture(Region region) {
+    public void setRegion(Region region) {
         World world = toBukkit(region.getWorld());
 
         if (!world.getUID().equals(worldId)) {
@@ -94,11 +94,11 @@ public class Port {
         this.direction = Directions.fromLocation(location);
     }
 
-    public Vector getDepartureMin() {
+    public Vector getRegionMin() {
         return departureMin;
     }
 
-    public Vector getDepartureMax() {
+    public Vector getRegionMax() {
         return departureMax;
     }
 }

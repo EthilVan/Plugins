@@ -20,73 +20,80 @@ public class TravelsRunnable implements Runnable {
     @Override
     public void run() {
         for (Travel travel : plugin.getTravels()) {
-
             if (!travel.isActive()) {
                 continue;
             }
 
-            Port departurePort = plugin.getPorts().get(travel.getDeparture());
-            World world = departurePort.getWorld();
-
-            if (travel.getSchedule() == -1) {
-                teleport(travel, world, departurePort);
+            Port departure = plugin.getPorts().get(travel.getDeparture());
+            if (departure == null) {
                 continue;
             }
 
-            long worldTime = world.getTime();
-            int delay = plugin.getTravelsConfig().getCheckDelay() / 2;
-            int minAllowedTime = travel.getSchedule() - delay;
-            int maxAllowedTime = travel.getSchedule() + delay;
-
-            if (worldTime < minAllowedTime || worldTime > maxAllowedTime) {
+            World world = departure.getWorld();
+            if (!checkSchedule(travel, world.getTime())) {
                 continue;
             }
 
-            teleport(travel, world, departurePort);
+            performTravel(travel, world, departure);
         }
     }
 
-    private void teleport(Travel travel, World world, Port departurePort) {
+    private boolean checkSchedule(Travel travel, long time) {
+        if (!travel.hasSchedule()) {
+            return true;
+        }
+
+        int delay = plugin.getTravelsConfig().getCheckDelay() / 2;
+        int intervalMin = travel.getSchedule() - delay;
+        int intervalMax = travel.getSchedule() + delay;
+
+        return time > intervalMin && time < intervalMax;
+    }
+
+    private void performTravel(Travel travel, World world, Port departure) {
+        Port destination = plugin.getPorts().get(travel.getDestination());
+        if (destination == null) {
+            return;
+        }
+
+        Economy economy = EthilVan.getEconomy();
+        double price =  travel.getPrice();
+        int displayPrice = (int) (price * 100);
+
         for (Player player : world.getPlayers()) {
-            if (!departurePort.departureContains(player)) {
+            if (!departure.contains(player)) {
                 continue;
             }
 
             if (!player.hasPermission("travels.use")) {
-                player.sendMessage(plugin.getMessages()
-                        .get("runnable.hasNotPermission"));
+                player.sendMessage(msg("runnable.hasNotPermission"));
                 continue;
             }
 
-            Economy eco = EthilVan.getEconomy();
-            double price =  travel.getPrice();
-
-            if (player.hasPermission("travels.use.free")) {
-                price = 0;
-            }
-
-            if (!eco.has(player.getName(), price)) {
-                player.sendMessage(plugin.getMessages()
-                        .get("runnable.hasNotEnoughMoney"));
+            boolean free = price == 0 &&
+                    player.hasPermission("travels.use.free");
+            if (!free && !economy.has(player.getName(), price)) {
+                player.sendMessage(msg("runnable.hasNotEnoughMoney"));
                 continue;
             }
 
-            Port destinationPort = plugin.getPorts().get(travel.getDestination());
-            player.teleport(destinationPort.getDestination());
-            int travelprice = (int) (price * 100);
-            if (price != 0) {
-                player.sendMessage(plugin.getMessages()
-                        .get("runnable.thanksForUse_1"));
+            player.teleport(destination.getPosition());
+
+            if (free) {
+                player.sendMessage(msg("runnable.thanksForUse_1"));
             } else {
-                player.sendMessage(plugin.getMessages()
-                        .get("runnable.thanksForUse_2", travelprice));
+                economy.withdrawPlayer(player.getName(), price);
+                player.sendMessage(msg("runnable.thanksForUse_2",
+                        displayPrice));
             }
-
-            if (price == 0) {
-                continue;
-            }
-
-            eco.withdrawPlayer(player.getName(), price);
         }
+    }
+
+    private String msg(String key) {
+        return plugin.getMessages().get(key);
+    }
+
+    private String msg(String key, Object... arguments) {
+        return plugin.getMessages().get(key, arguments);
     }
 }
