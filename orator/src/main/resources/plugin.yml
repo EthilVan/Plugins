@@ -14,7 +14,7 @@ commands:
         usage: ""
         aliases: ["ot"]
         permission: "ev.orator.use"
-    "orator-time":
+    "orator time":
         description: "Set the player client time"
         usage: "[time]"
         aliases: ["ott"]
