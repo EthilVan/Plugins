@@ -21,7 +21,7 @@ public class BookCommands extends MiscCommands {
         ItemStack stack = sender.getItemInHand();
 
         if (stack.getType() != Material.WRITTEN_BOOK) {
-            throw new CommandError("Item must be a Written Book.");
+            throw new CommandError("Vous devez tenir un livre écrit");
         }
 
         BookMeta meta = (BookMeta) stack.getItemMeta();
@@ -43,7 +43,7 @@ public class BookCommands extends MiscCommands {
         ItemStack stack = sender.getItemInHand();
 
         if (stack.getType() != Material.WRITTEN_BOOK) {
-            throw new CommandError("Item must be a Written Book.");
+            throw new CommandError("Vous devez tenir un livre écrit");
         }
 
         BookMeta meta = (BookMeta) stack.getItemMeta();
@@ -59,7 +59,7 @@ public class BookCommands extends MiscCommands {
         ItemStack stack = sender.getItemInHand();
 
         if (stack.getType() != Material.WRITTEN_BOOK) {
-            throw new CommandError("Item must be a Written Book.");
+            throw new CommandError("Vous devez tenir un livre écrit");
         }
 
         BookMeta meta = (BookMeta) stack.getItemMeta();
