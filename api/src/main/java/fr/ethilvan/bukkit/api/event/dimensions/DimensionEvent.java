@@ -10,6 +10,7 @@ public abstract class DimensionEvent extends Event {
 
     protected DimensionEvent(Dimension dimension) {
         super();
+        this.dimension = dimension;
     }
 
     public Dimension getDimension() {
