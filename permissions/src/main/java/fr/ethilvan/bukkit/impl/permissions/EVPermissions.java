@@ -12,9 +12,11 @@ import com.avaje.ebean.ExpressionList;
 
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefHashMap;
 import fr.aumgn.bukkitutils.playerref.map.PlayersRefMap;
+import fr.aumgn.bukkitutils.util.Util;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Account;
 import fr.ethilvan.bukkit.api.accounts.Role;
+import fr.ethilvan.bukkit.api.event.permissions.PermissionsUpdateEvent;
 import fr.ethilvan.bukkit.api.permissions.Permissions;
 import fr.ethilvan.bukkit.permissions.PermissionsPlugin;
 
@@ -48,7 +50,6 @@ public class EVPermissions implements Permissions {
         registerPlayer(player);
     }
 
-    @Override
     public void registerPlayer(Player player) {
         PermissionAttachment attachment = player.addAttachment(plugin);
         permissions.put(player, attachment);
@@ -56,9 +57,10 @@ public class EVPermissions implements Permissions {
         for (String permission : perms) {
             attachment.setPermission(permission, true);
         }
+
+        Util.callEvent(new PermissionsUpdateEvent(player));
     }
 
-    @Override
     public void unregisterPlayer(Player player) {
         if (permissions.containsKey(player)) {
             try {
@@ -90,8 +92,9 @@ public class EVPermissions implements Permissions {
     private void addRoleNodes(Collection<String> nodes, String dimension,
             Role role, boolean inherited, Set<String> pseudoRoles) {
         nodes.add(GROUP_PREFIX + role.getId());
-        addSpecificPermissions(nodes, "", role.getId(), inherited);
-        addSpecificPermissions(nodes, dimension, role.getId(), inherited);
+        boolean roleInherited = inherited || !pseudoRoles.isEmpty();
+        addSpecificPermissions(nodes, "", role.getId(), roleInherited);
+        addSpecificPermissions(nodes, dimension, role.getId(), roleInherited);
         for (String pseudoRole : pseudoRoles) {
             String computedRole = role.getId() + ":" + pseudoRole;
             nodes.add(GROUP_PREFIX + computedRole);

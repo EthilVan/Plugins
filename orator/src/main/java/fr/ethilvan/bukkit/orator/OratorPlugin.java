@@ -1,16 +1,16 @@
 package fr.ethilvan.bukkit.orator;
 
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.aumgn.bukkitutils.command.CommandsRegistration;
@@ -20,16 +20,7 @@ import fr.aumgn.bukkitutils.playerref.set.PlayersRefHashSet;
 import fr.aumgn.bukkitutils.playerref.set.PlayersRefSet;
 import fr.ethilvan.bukkit.api.EthilVan;
 
-public class OratorPlugin extends JavaPlugin {
-
-    private static final Set<Material> FORBIDDEN_BLOCKS;
-    static {
-        FORBIDDEN_BLOCKS = new HashSet<Material>();
-        FORBIDDEN_BLOCKS.add(Material.CHEST);
-        FORBIDDEN_BLOCKS.add(Material.FURNACE);
-        FORBIDDEN_BLOCKS.add(Material.BREWING_STAND);
-        FORBIDDEN_BLOCKS.add(Material.ENDER_CHEST);
-    }
+public class OratorPlugin extends JavaPlugin implements Listener {
 
     private PlayersRefSet orators;
     private PlayersRefMap<Location> locations;
@@ -38,8 +29,7 @@ public class OratorPlugin extends JavaPlugin {
     public void onEnable() {
         orators = new PlayersRefHashSet(); 
         locations = new PlayersRefHashMap<Location>();
-        Bukkit.getPluginManager().registerEvents(new OratorListener(this),
-                this);
+        Bukkit.getPluginManager().registerEvents(this, this);
 
         CommandsRegistration registration =
                 new CommandsRegistration(this, Locale.FRANCE);
@@ -93,7 +83,10 @@ public class OratorPlugin extends JavaPlugin {
         locations.remove(player);
     }
 
-    public boolean isForbiddenBlock(Block block) {
-        return FORBIDDEN_BLOCKS.contains(block.getType());
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onQuit(PlayerQuitEvent event) {
+        if (isOrator(event.getPlayer())) {
+            turnOff(event.getPlayer());
+        }
     }
 }

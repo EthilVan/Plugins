@@ -11,8 +11,4 @@ public interface Permissions {
     Set<String> getPermissionsList(String role, String dimension);
 
     void update(Player player);
-
-    void registerPlayer(Player player);
-
-    void unregisterPlayer(Player player);
 }

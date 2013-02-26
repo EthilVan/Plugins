@@ -7,28 +7,34 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 
-import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.event.dimensions.DimensionEnterEvent;
+import fr.ethilvan.bukkit.impl.permissions.EVPermissions;
 
 public class PermissionsListener implements Listener {
 
+    private final EVPermissions permissions;
+
+    public PermissionsListener(EVPermissions permissions) {
+        this.permissions = permissions;
+    }
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        EthilVan.getPermissions().registerPlayer(event.getPlayer());
+        permissions.registerPlayer(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerQuit(PlayerQuitEvent event) {
-        EthilVan.getPermissions().unregisterPlayer(event.getPlayer());
+        permissions.unregisterPlayer(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKick(PlayerKickEvent event) {
-        EthilVan.getPermissions().unregisterPlayer(event.getPlayer());
+        permissions.unregisterPlayer(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onDimensionEnter(DimensionEnterEvent event) {
-        EthilVan.getPermissions().update(event.getPlayer());
+        permissions.update(event.getPlayer());
     }
 }

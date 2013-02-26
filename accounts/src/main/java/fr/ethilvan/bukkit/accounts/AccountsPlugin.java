@@ -22,7 +22,6 @@ import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.ethilvan.bukkit.accounts.listeners.AccountsListener;
 import fr.ethilvan.bukkit.accounts.listeners.NamePlatePacketListener;
-import fr.ethilvan.bukkit.accounts.listeners.VisitorsListener;
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.accounts.Accounts;
 import fr.ethilvan.bukkit.impl.accounts.AbstractAccount;
@@ -59,9 +58,7 @@ public class AccountsPlugin extends JavaPlugin implements Runnable {
         EthilVan.registerAccounts(accounts);
 
         Listener accountsListener = new AccountsListener(this);
-        Listener visitorListener = new VisitorsListener();
         pm.registerEvents(accountsListener, this);
-        pm.registerEvents(visitorListener, this);
 
         ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(new NamePlatePacketListener(this));
