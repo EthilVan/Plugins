@@ -80,10 +80,10 @@ public class TravelsRunnable implements Runnable {
             player.teleport(destination.getPosition());
 
             if (free) {
-                player.sendMessage(msg("runnable.thanksForUse_1"));
+                player.sendMessage(msg("runnable.thanksForUse_2"));
             } else {
                 economy.withdrawPlayer(player.getName(), price);
-                player.sendMessage(msg("runnable.thanksForUse_2",
+                player.sendMessage(msg("runnable.thanksForUse_1",
                         displayPrice));
             }
         }
