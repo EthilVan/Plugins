@@ -127,7 +127,6 @@ public class SuperPigMode {
     }
 
     public void turnOff(Player player, TurnOffReason reason) {
-        spPlayers.remove(player);
         SPMPlayerSave spPlayerSave = spPlayersSave.remove(player);
 
         spPlayerSave.restore(player);
@@ -144,6 +143,7 @@ public class SuperPigMode {
         if (reason != TurnOffReason.Stop) {
             EthilVan.getAccounts().removePseudoRole(player, "spm");
         }
+        spPlayers.remove(player);
 
         logConsole(ChatColor.GREEN + "SuperPig Mode desactivé pour "
                 + player.getDisplayName());
