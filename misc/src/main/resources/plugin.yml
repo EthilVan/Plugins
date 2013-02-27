@@ -20,19 +20,28 @@ commands:
         description: "Redéfinis l'auteur"
         usage: "<author>"
         aliases: ["author"]
-        permission: "ev.misc.commands.author"
+        permission: "ev.misc.commands.book.author"
     "evmisc book pages":
         description: "Redéfinis les pages"
         usage: "<pages...>"
         aliases: ["pages"]
-        permission: "ev.misc.commands.pages"
+        permission: "ev.misc.commands.book.pages"
     "evmisc book page":
         description: "Redéfinis une page"
         usage: "[page] [data]"
         aliases: ["page"]
-        permission: "ev.misc.commands.page"
+        permission: "ev.misc.commands.book.page"
     "evmisc book title":
         description: "Redéfinis le titre du livre"
         usage: "<title>"
         aliases: ["title"]
-        permission: "ev.misc.commands.title"
+        permission: "ev.misc.commands.book.title"
+
+permissions:
+
+    "ev.misc.commands.book.*":
+        children:
+            ev.misc.commands.book.author: true
+            ev.misc.commands.book.pages: true
+            ev.misc.commands.book.page: true
+            ev.misc.commands.book.title: true
