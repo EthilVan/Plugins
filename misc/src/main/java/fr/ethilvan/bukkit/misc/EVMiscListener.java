@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.inventory.FurnaceExtractEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -150,6 +151,11 @@ public class EVMiscListener implements Listener {
     @EventHandler
     public void blockDropXpEvent(BlockBreakEvent event) {
     	event.setExpToDrop(0);
+    }
+
+    @EventHandler
+    public void furnaceExtrackEvent(FurnaceExtractEvent event) {
+        event.setExpToDrop(0);
     }
 
     @EventHandler
