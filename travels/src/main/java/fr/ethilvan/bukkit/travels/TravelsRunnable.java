@@ -70,7 +70,7 @@ public class TravelsRunnable implements Runnable {
                 continue;
             }
 
-            boolean free = price == 0 &&
+            boolean free = price == 0 ||
                     player.hasPermission("travels.use.free");
             if (!free && !economy.has(player.getName(), price)) {
                 player.sendMessage(msg("runnable.hasNotEnoughMoney"));
