@@ -54,7 +54,7 @@ public class BookCommands extends MiscCommands {
         sender.sendMessage(ChatColor.GREEN + "Pages redéfinies.");
     }
 
-    @Command(name="page", min = 1, max = 1)
+    @Command(name="page", min = 2, max = 2)
     public void setPage(Player sender, CommandArgs args) {
         ItemStack stack = sender.getItemInHand();
 
