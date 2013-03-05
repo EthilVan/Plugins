@@ -7,6 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.potion.PotionEffect;
 
 import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.api.dimensions.Dimension;
@@ -39,6 +40,11 @@ public class EventAdapter implements Listener {
                 EthilVan.getInventories().replace(player,
                         inventoryName(player, from),
                         inventoryName(player, to));
+            }
+            if (from.getConfig().hasFlag("reset-potion")) {
+                for (PotionEffect potion : player.getActivePotionEffects()) {
+                    player.removePotionEffect(potion.getType());
+                }
             }
         }
     }
