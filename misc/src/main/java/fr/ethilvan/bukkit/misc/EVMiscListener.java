@@ -103,7 +103,7 @@ public class EVMiscListener implements Listener {
     	boolean chance = Util.getRandom().nextInt() < 0.5;
 
     	if (item.getType() != Material.INK_SACK
-    			|| item.getDurability() == (short) 0) {
+    			|| item.getDurability() != (short) 15) {
     		return;
     	}
 
