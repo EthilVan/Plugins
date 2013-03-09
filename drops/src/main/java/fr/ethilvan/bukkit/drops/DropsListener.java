@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.UUID;
 
 import net.milkbowl.vault.economy.Economy;
-
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -84,12 +82,12 @@ public class DropsListener implements Listener {
         if (damager instanceof Player) {
             Player player = (Player) damager;
             String name = player.getName();
-            if (EthilVan.getAccounts().getPseudoRoles(player).contains("spm")) {
-                player.sendMessage(ChatColor.RED + "Un Super Pig est déjà riche !");
-                return;
-            }
             int amount = plugin.getEcoConfig().getMoneyDrop(entity);
             if (amount > 0) {
+                if (EthilVan.getAccounts()
+                        .getPseudoRoles(player).contains("spm")) {
+                    return;
+                }
                 Economy eco = EthilVan.getEconomy();
                 int balance = (int) Math.ceil(eco.getBalance(name));
                 eco.depositPlayer(name, ((double)amount) / 100);
