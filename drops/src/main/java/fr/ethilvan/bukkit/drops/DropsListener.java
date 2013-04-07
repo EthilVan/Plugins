@@ -2,6 +2,7 @@ package fr.ethilvan.bukkit.drops;
 
 import java.util.HashSet;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Blaze;
@@ -18,6 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import fr.ethilvan.bukkit.api.EthilVan;
+import fr.ethilvan.bukkit.drops.randomDrops.RandomDrop;
 
 public class DropsListener implements Listener {
 
@@ -80,6 +82,16 @@ public class DropsListener implements Listener {
         }
 
         if (damager instanceof Player) {
+            for (RandomDrop randomDrop : plugin.getRandomDrops()) {
+                if (randomDrop.getEntityType() == null) {
+                    plugin.getLogger().log(Level.SEVERE, "Aucun mob trouvé avec : "
+                            + randomDrop.getEntityName());
+                    return;
+                }
+                if (randomDrop.drop(event.getEntity().getType())) {
+                    event.getDrops().add(randomDrop.toItemStack());
+                }
+            }
             Player player = (Player) damager;
             String name = player.getName();
             int amount = plugin.getEcoConfig().getMoneyDrop(entity);
