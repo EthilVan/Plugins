@@ -17,15 +17,14 @@ import com.google.gson.GsonBuilder;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
-import fr.aumgn.bukkitutils.gson.typeadapter.WorldTypeAdapterFactory;
-import fr.ethilvan.bukkit.drops.randomDrops.RandomDrop;
-import fr.ethilvan.bukkit.drops.randomDrops.RandomDrops;
+import fr.ethilvan.bukkit.drops.randomDrops.CustomDrop;
+import fr.ethilvan.bukkit.drops.randomDrops.CustomDrops;
 
 public class DropsPlugin extends JavaPlugin {
 
     private HashSet<UUID> spawnerSpawnedMobs;
     private EcoConfig ecoConfig;
-    private RandomDrops randomDrops;
+    private CustomDrops customDrops;
 
     @Override
     public void onEnable() {
@@ -33,14 +32,14 @@ public class DropsPlugin extends JavaPlugin {
 
         spawnerSpawnedMobs = new HashSet<UUID>();
         ecoConfig = new EcoConfig(this);
-        writeData();
+        loadData();
         Listener listener = new DropsListener(this); 
         pm.registerEvents(listener, this);
     }
 
     @Override
     public void onDisable() {
-        loadData();
+        writeData();
     }
 
     public HashSet<UUID> getSpawnerSpawnedMobs() {
@@ -51,36 +50,33 @@ public class DropsPlugin extends JavaPlugin {
         return ecoConfig;
     }
 
-    public List<RandomDrop> getRandomDrops() {
-        return randomDrops.getRandomDrops();
+    public List<CustomDrop> getCustomDrops() {
+        return customDrops.getCustomDrops();
     }
 
     private GsonLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
-            .registerTypeAdapterFactory(new WorldTypeAdapterFactory())
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
-            .setPrettyPrinting()
-            .create();
+        .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+        .setPrettyPrinting().create();
         return new GsonLoader(gson, this);
     }
 
     private void loadData() {
         try {
-            randomDrops = getGsonLoader().loadOrCreate("randomDrops.json",
-                    RandomDrops.class);
+            customDrops = getGsonLoader().loadOrCreate("customDrops.json",
+                    CustomDrops.class);
         } catch (GsonLoadException exc) {
-            getLogger().log(Level.SEVERE, "Unable to load randomDrops.json", exc);
-            randomDrops = new RandomDrops();
+            getLogger().log(Level.SEVERE, "Unable to load customDrops.json", exc);
+            customDrops = new CustomDrops();
         }
     }
 
     private void writeData() {
         try {
-            getGsonLoader().write("randomDrops.json", randomDrops);
+            getGsonLoader().write("customDrops.json", customDrops);
         } catch (GsonLoadException exc) {
-            getLogger().log(Level.SEVERE, "Unable to write randomDrops.json", exc);
+            getLogger().log(Level.SEVERE, "Unable to write customDrops.json", exc);
         }
     }
 }

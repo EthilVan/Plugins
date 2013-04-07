@@ -19,7 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import fr.ethilvan.bukkit.api.EthilVan;
-import fr.ethilvan.bukkit.drops.randomDrops.RandomDrop;
+import fr.ethilvan.bukkit.drops.randomDrops.CustomDrop;
 
 public class DropsListener implements Listener {
 
@@ -82,7 +82,7 @@ public class DropsListener implements Listener {
         }
 
         if (damager instanceof Player) {
-            for (RandomDrop randomDrop : plugin.getRandomDrops()) {
+            for (CustomDrop randomDrop : plugin.getCustomDrops()) {
                 if (randomDrop.getEntityType() == null) {
                     plugin.getLogger().log(Level.SEVERE, "Aucun mob trouvé avec : "
                             + randomDrop.getEntityName());
