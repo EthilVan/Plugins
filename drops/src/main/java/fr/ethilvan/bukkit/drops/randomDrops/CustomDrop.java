@@ -40,8 +40,9 @@ public class CustomDrop {
         ItemStack stack = new ItemStack(id, randomAmount, data);
         if (enchantmentName != null || enchantmentLevel != 0) {
             Enchantment enchant = Enchantment.getByName(enchantmentName);
-            if (enchant != null) stack.addEnchantment(enchant,
-                        enchantmentLevel);
+            if (enchant != null) {
+                stack.addUnsafeEnchantment(enchant, enchantmentLevel);
+            }
         }
         return stack;
     }
