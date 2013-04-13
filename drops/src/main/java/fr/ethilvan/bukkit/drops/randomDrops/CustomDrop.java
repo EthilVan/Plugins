@@ -1,8 +1,11 @@
 package fr.ethilvan.bukkit.drops.randomDrops;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.aumgn.bukkitutils.util.Util;
 
@@ -42,6 +45,10 @@ public class CustomDrop {
             Enchantment enchant = Enchantment.getByName(enchantmentName);
             if (enchant != null) {
                 stack.addUnsafeEnchantment(enchant, enchantmentLevel);
+                if (stack.getType() == Material.WRITTEN_BOOK) {
+                    ItemMeta meta = stack.getItemMeta();
+                    meta.setDisplayName(ChatColor.YELLOW + meta.getDisplayName());
+                }
             }
         }
         return stack;
