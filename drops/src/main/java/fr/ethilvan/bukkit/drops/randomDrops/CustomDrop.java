@@ -56,6 +56,6 @@ public class CustomDrop {
 
     public boolean drop(EntityType entity) {
         return getEntityType() == entity 
-                && Util.getRandom().nextDouble(100) < rate - 1;
+                && Util.getRandom().nextDouble(100) < rate;
     }
 }
