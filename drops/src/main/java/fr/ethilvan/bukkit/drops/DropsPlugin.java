@@ -17,8 +17,8 @@ import com.google.gson.GsonBuilder;
 import fr.aumgn.bukkitutils.gson.GsonLoadException;
 import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
-import fr.ethilvan.bukkit.drops.randomDrops.CustomDrop;
-import fr.ethilvan.bukkit.drops.randomDrops.CustomDrops;
+import fr.ethilvan.bukkit.drops.customDrops.CustomDrop;
+import fr.ethilvan.bukkit.drops.customDrops.CustomDrops;
 
 public class DropsPlugin extends JavaPlugin {
 

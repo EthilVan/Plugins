@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.drops.randomDrops;
+package fr.ethilvan.bukkit.drops.customDrops;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -64,6 +64,6 @@ public class CustomDrop {
 
     public boolean drop(EntityType entity) {
         return getEntityType() == entity 
-                && Util.getRandom().nextDouble(100) <= rate;
+                && Util.getRandom().nextDouble(100) + 1 <= rate;
     }
 }

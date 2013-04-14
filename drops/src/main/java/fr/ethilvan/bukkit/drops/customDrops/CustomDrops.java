@@ -1,4 +1,4 @@
-package fr.ethilvan.bukkit.drops.randomDrops;
+package fr.ethilvan.bukkit.drops.customDrops;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -19,7 +19,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import fr.ethilvan.bukkit.api.EthilVan;
-import fr.ethilvan.bukkit.drops.randomDrops.CustomDrop;
+import fr.ethilvan.bukkit.drops.customDrops.CustomDrop;
 
 public class DropsListener implements Listener {
 
