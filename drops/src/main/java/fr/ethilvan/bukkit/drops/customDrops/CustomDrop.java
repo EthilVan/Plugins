@@ -48,6 +48,7 @@ public class CustomDrop {
                 if (stack.getType() == Material.WRITTEN_BOOK) {
                     ItemMeta meta = stack.getItemMeta();
                     meta.setDisplayName(ChatColor.YELLOW + meta.getDisplayName());
+                    stack.setItemMeta(meta);
                 }
             }
         }
