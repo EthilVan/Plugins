@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -18,8 +17,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import fr.ethilvan.bukkit.api.EthilVan;
 import fr.ethilvan.bukkit.drops.customDrops.CustomDrop;
+import fr.ethilvan.bukkit.drops.eco.MoneyDrop;
 
 public class DropsListener implements Listener {
 
@@ -92,21 +91,16 @@ public class DropsListener implements Listener {
                     event.getDrops().add(randomDrop.toItemStack());
                 }
             }
-            Player player = (Player) damager;
-            String name = player.getName();
-            int amount = plugin.getEcoConfig().getMoneyDrop(entity);
-            if (amount > 0) {
-                if (EthilVan.getAccounts()
-                        .getPseudoRoles(player).contains("spm")) {
+
+            for (MoneyDrop moneyDrop : plugin.getMoneyDrops()) {
+                if (moneyDrop.getEntityType() == null) {
+                    plugin.getLogger().log(Level.SEVERE, "Aucun mob trouvé avec : "
+                            + moneyDrop.getEntityName());
                     return;
                 }
-                Economy eco = EthilVan.getEconomy();
-                int balance = (int) Math.ceil(eco.getBalance(name));
-                eco.depositPlayer(name, ((double)amount) / 100);
-                double newBalance = eco.getBalance(name); 
-                if ((int)newBalance > balance) {
-                    player.sendMessage("Vous avez desormais "
-                            + eco.format(newBalance));
+
+                if (moneyDrop.drop(event.getEntity().getType())) {
+                    moneyDrop.dropMoneyToPlayer((Player) damager);
                 }
             }
         }

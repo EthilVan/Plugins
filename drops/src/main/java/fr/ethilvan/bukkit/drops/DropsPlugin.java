@@ -19,19 +19,20 @@ import fr.aumgn.bukkitutils.gson.GsonLoader;
 import fr.aumgn.bukkitutils.gson.typeadapter.DirectionTypeAdapterFactory;
 import fr.ethilvan.bukkit.drops.customDrops.CustomDrop;
 import fr.ethilvan.bukkit.drops.customDrops.CustomDrops;
+import fr.ethilvan.bukkit.drops.eco.MoneyDrop;
+import fr.ethilvan.bukkit.drops.eco.MoneyDrops;
 
 public class DropsPlugin extends JavaPlugin {
 
     private HashSet<UUID> spawnerSpawnedMobs;
-    private EcoConfig ecoConfig;
     private CustomDrops customDrops;
+    private MoneyDrops moneyDrops;
 
     @Override
     public void onEnable() {
         PluginManager pm = Bukkit.getPluginManager();
 
         spawnerSpawnedMobs = new HashSet<UUID>();
-        ecoConfig = new EcoConfig(this);
         loadData();
         Listener listener = new DropsListener(this); 
         pm.registerEvents(listener, this);
@@ -46,12 +47,12 @@ public class DropsPlugin extends JavaPlugin {
         return spawnerSpawnedMobs;
     }
 
-    public EcoConfig getEcoConfig() {
-        return ecoConfig;
-    }
-
     public List<CustomDrop> getCustomDrops() {
         return customDrops.getCustomDrops();
+    }
+
+    public List<MoneyDrop> getMoneyDrops() {
+        return moneyDrops.getMoneyDrops();
     }
 
     private GsonLoader getGsonLoader() {
@@ -64,6 +65,14 @@ public class DropsPlugin extends JavaPlugin {
 
     private void loadData() {
         try {
+            moneyDrops = getGsonLoader().loadOrCreate("moneyDrops.json",
+                    MoneyDrops.class);
+        } catch (GsonLoadException exc) {
+            getLogger().log(Level.SEVERE, "Unable to load moneyDrops.json", exc);
+            moneyDrops = new MoneyDrops();
+        }
+
+        try {
             customDrops = getGsonLoader().loadOrCreate("customDrops.json",
                     CustomDrops.class);
         } catch (GsonLoadException exc) {
@@ -73,6 +82,12 @@ public class DropsPlugin extends JavaPlugin {
     }
 
     private void writeData() {
+        try {
+            getGsonLoader().write("moneyDrops.json", moneyDrops);
+        } catch (GsonLoadException exc) {
+            getLogger().log(Level.SEVERE, "Unable to write moneyDrops.json", exc);
+        }
+
         try {
             getGsonLoader().write("customDrops.json", customDrops);
         } catch (GsonLoadException exc) {
