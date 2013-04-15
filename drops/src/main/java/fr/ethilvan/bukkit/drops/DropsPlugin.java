@@ -10,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,7 +30,6 @@ public class DropsPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         PluginManager pm = Bukkit.getPluginManager();
-
         spawnerSpawnedMobs = new HashSet<UUID>();
         loadData();
         Listener listener = new DropsListener(this); 
@@ -58,7 +56,6 @@ public class DropsPlugin extends JavaPlugin {
     private GsonLoader getGsonLoader() {
         Gson gson = new GsonBuilder()
         .registerTypeAdapterFactory(new DirectionTypeAdapterFactory())
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
         .setPrettyPrinting().create();
         return new GsonLoader(gson, this);
     }

@@ -35,7 +35,7 @@ public class MoneyDrop {
     }
 
     public boolean drop(EntityType entity) {
-        return entity.getName().equalsIgnoreCase(entityName)
+        return getEntityType() == entity
                 && Util.getRandom().nextInt(100) < rate - 1;
     }
 
