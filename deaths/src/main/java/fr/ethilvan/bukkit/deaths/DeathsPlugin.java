@@ -1,67 +1,99 @@
 package fr.ethilvan.bukkit.deaths;
 
+import java.util.List;
+import java.util.logging.Level;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.ethilvan.bukkit.deaths.death.DispenserPlayerDeath;
-import fr.ethilvan.bukkit.deaths.death.PlayerDeath;
-import fr.ethilvan.bukkit.deaths.death.PlayerKilledByMob;
-import fr.ethilvan.bukkit.deaths.death.PlayerKilledByPlayer;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import fr.aumgn.bukkitutils.gson.GsonLoadException;
+import fr.aumgn.bukkitutils.gson.GsonLoader;
 
 public class DeathsPlugin extends JavaPlugin implements Listener {
 
-    private DeathMessages messages;
+    private DeathMessages deathMessages;
 
     @Override
     public void onEnable() {
-        messages = new DeathMessages(this);
+        loadData();
         Bukkit.getPluginManager().registerEvents(this, this);
+    }
+
+    @Override
+    public void onDisable() {
+        writeData();
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd,
             String lbl, String[] args) {
-        messages = new DeathMessages(this);
+        loadData();
         sender.sendMessage("Messages rechargés.");
         return true;
     }
 
     @EventHandler
-    protected void onPlayerDeath(PlayerDeathEvent event) {
-        event.setDeathMessage(null);
-        PlayerDeath playerDeath = process(event);
-        String message = messages.getDeathMessage(playerDeath);
-        event.setDeathMessage(message);
-    }
-
-    public PlayerDeath process(PlayerDeathEvent event) {
-        EntityDamageEvent dmgEvent = (event.getEntity()).getLastDamageCause();
-        if (dmgEvent instanceof EntityDamageByEntityEvent) {
-            EntityDamageByEntityEvent dmgByEntityEvent =
-                    (EntityDamageByEntityEvent)dmgEvent;
-            Entity damager = dmgByEntityEvent.getDamager();
-            if (damager instanceof Projectile) {
-                damager = ((Projectile) damager).getShooter();
-                if (damager == null) {
-                    return new DispenserPlayerDeath(event);
+    public void onEntityDeath(PlayerDeathEvent event) {
+        for (DeathMessage deathMessage : getDeathMessages()) {
+            EntityType eventMobType = deathMessage.getKiller(event);
+            if (eventMobType == EntityType.PLAYER && deathMessage.getDeathCauseOrMob().equalsIgnoreCase("PLAYER")) {
+                event.setDeathMessage(deathMessage.getOneMessage(event));
+            } else if (deathMessage.isDamageCause()) {
+                DamageCause eventCause = event.getEntity()
+                        .getLastDamageCause().getCause();
+                DamageCause messageCause =
+                        DamageCause.valueOf(deathMessage.getDeathCauseOrMob());
+                if (eventCause == messageCause) {
+                    event.setDeathMessage(deathMessage.getOneMessage(event));
+                    return;
+                }
+            } else if (deathMessage.isEntity()) {
+                EntityType messageMobType = EntityType.fromName(deathMessage.getDeathCauseOrMob());
+                if (eventMobType == messageMobType) {
+                    event.setDeathMessage(deathMessage.getOneMessage(event));
+                    return;
                 }
             }
-            if (damager instanceof Player) {
-                return new PlayerKilledByPlayer(event, (Player) damager);
-            } else {
-                return new PlayerKilledByMob(event, damager);
-            }
         }
-        return new PlayerDeath(event);
+    }
+
+    public List<DeathMessage> getDeathMessages() {
+        return deathMessages.getDeathMessages();
+    }
+
+    private GsonLoader getGsonLoader() {
+        Gson gson = new GsonBuilder()
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_DASHES)
+        .setPrettyPrinting().create();
+        return new GsonLoader(gson, this);
+    }
+
+    private void loadData() {
+        try {
+            deathMessages = getGsonLoader().loadOrCreate("deathMessages.json",
+                    DeathMessages.class);
+        } catch (GsonLoadException exc) {
+            getLogger().log(Level.SEVERE, "Unable to load deathMessages.json", exc);
+            deathMessages = new DeathMessages();
+        }
+    }
+
+    private void writeData() {
+        try {
+            getGsonLoader().write("deathMessages.json", deathMessages);
+        } catch (GsonLoadException exc) {
+            getLogger().log(Level.SEVERE, "Unable to write deathMessages.json", exc);
+        }
     }
 }

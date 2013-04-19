@@ -1,58 +1,51 @@
 package fr.ethilvan.bukkit.deaths;
 
-import java.io.File;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import org.bukkit.configuration.Configuration;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.Plugin;
-
-import fr.ethilvan.bukkit.deaths.death.PlayerDeath;
-import fr.ethilvan.bukkit.deaths.death.PlayerDeathCause;
-import fr.ethilvan.bukkit.deaths.death.PlayerKilledByMob;
 
 public class DeathMessages {
 
-    private DeathsPlugin plugin; 
+    private List<DeathMessage> deathMessages = new ArrayList<DeathMessage>();
 
-    public DeathMessages(DeathsPlugin plugin) {
-        super();
-        this.plugin = plugin;
-        File configFile = new File(plugin.getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            saveDefaultConfig(plugin);
-        }
+    public DeathMessages() {
+        List<String> fireMessages = new ArrayList<String>();
+        fireMessages.add("<player> a été brûlé vif.");
+        fireMessages.add("<player> a fini en cendres.");
+        fireMessages.add("<player> a eu chaud, très chaud, trop chaud...");
+        this.deathMessages.add(new DeathMessage("FIRE", fireMessages));
+        List<String> lavaMessages = new ArrayList<String>();
+        lavaMessages.add("<player> a fini dans la lave...");
+        lavaMessages.add("<player> s'est transformé en Obsidienne.");
+        lavaMessages.add("<player> a pris un bain dans un lac de feu.");
+        this.deathMessages.add(new DeathMessage("LAVA", lavaMessages));
+        List<String> zombieMessages = new ArrayList<String>();
+        zombieMessages.add("<player> s'est fait dévorer vivant par un zombie.");
+        zombieMessages.add("<player> a été tué par un zombie.");
+        zombieMessages.add("<player> a servi de repas à un zombie.");
+        this.deathMessages.add(new DeathMessage("ZOMBIE", zombieMessages));
+        List<String> skeletonMessages = new ArrayList<String>();
+        skeletonMessages.add("<player> s'est fait cribler de flèches par un squelette.");
+        skeletonMessages.add("Un squelette a tué <player>.");
+        skeletonMessages.add("<player> a une flèche dans le front.");
+        this.deathMessages.add(new DeathMessage("SKELETON", skeletonMessages));
+        List<String> creeperMessages = new ArrayList<String>();
+        creeperMessages.add("<player> a été explosé par un Creeper.");
+        creeperMessages.add("<player> a essayé de faire un câlin à un Creeper.");
+        creeperMessages.add("SSSSSSssssssss...... est la derniere chose que <player> a entendu.");
+        this.deathMessages.add(new DeathMessage("CREEPER", creeperMessages));
+        List<String> explosionMessages = new ArrayList<String>();
+        explosionMessages.add("<player> a apparemment un caractère explosif.");
+        explosionMessages.add("<player> a explosé.");
+        explosionMessages.add("C'est ça de jouer avec la TNT <player>.");
+        this.deathMessages.add(new DeathMessage("BLOCK_EXPLOSION", explosionMessages));
+        List<String> playersMessages = new ArrayList<String>();
+        playersMessages.add("<murderer> a tué <player>.");
+        playersMessages.add("<player> a été surclassé par <murderer>.");
+        playersMessages.add("<murderer> a dominé <player>.");
+        this.deathMessages.add(new DeathMessage("PLAYER", playersMessages));
     }
 
-    private void saveDefaultConfig(Plugin plugin) {
-        List<String> emptyList = Collections.<String>emptyList();
-        Configuration config = plugin.getConfig();
-        for (PlayerDeathCause dmgCause : PlayerDeathCause.values()) {
-            if (dmgCause != PlayerDeathCause.Mob) {
-                config.set(dmgCause.name(), emptyList);
-            }
-        }
-        ConfigurationSection mobSection = config.createSection("Mob");
-        for (PlayerKilledByMob.Type creatureType : PlayerKilledByMob.Type.values()) {
-            mobSection.set(creatureType.name(), emptyList);
-        }
-        plugin.saveConfig();
-    }
-
-    public String getDeathMessage(PlayerDeath death) {
-        List<String> messages = plugin.getConfig().getStringList(death.getConfigPath());
-        if (messages == null || messages.size() < 1) {
-            return null;
-        }
-
-        int max = new Random().nextInt(messages.size());
-        String message = messages.get(max);
-        if (message == null) {
-            return null;
-        }
-
-        return death.parseMessage(message);
+    public List<DeathMessage> getDeathMessages() {
+        return this.deathMessages;
     }
 }
