@@ -14,16 +14,16 @@ public class DeathMessage {
     private List<String> messages;
 
     public DeathMessage(List<String> messages) {
-        this.messages = new ArrayList<String>();
+        this.messages = new ArrayList<String>(messages.size());
         this.messages.addAll(messages);
     }
 
     public List<String> getMessages() {
-        return this.messages;
+        return messages;
     }
 
     public String getOneMessage(PlayerDeathEvent event) {
-        return this.parse(Util.pickRandom(messages), event);
+        return parse(Util.pickRandom(messages), event);
     }
 
     private boolean isVowel(char c) {
@@ -55,19 +55,12 @@ public class DeathMessage {
 
         message = message.replaceAll("<player>", death.getDisplayName());
         message = message.replaceAll("<world>", death.getWorld().getName());
-
-        if (message.contains("<ofplayer>")) {
-            message.replaceAll("<ofplayer>", this.ofFormat(death.getDisplayName()));
-        }
-        if (message.contains("<ofworld>")) {
-            message.replaceAll("<ofworld>", this.ofFormat(death.getWorld().getName()));
-        }
+        message = message.replaceAll("<ofplayer>", ofFormat(death.getDisplayName()));
+        message = message.replaceAll("<ofworld>", ofFormat(death.getWorld().getName()));
         Player killer = death.getKiller();
         if (killer != null) {
             message = message.replaceAll("<murderer>", killer.getDisplayName());
-            if (message.contains("<ofmurderer>")) {
-                message.replaceAll("<ofmurderer>", this.ofFormat(killer.getDisplayName()));
-            }
+            message = message.replaceAll("<ofmurderer>", ofFormat(killer.getDisplayName()));
             message = message.replaceAll("<item>", killer.getItemInHand().getType().toString());
         }
         return message;

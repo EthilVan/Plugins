@@ -23,7 +23,7 @@ public class DeathMessages {
     }
 
     public Map<String, DeathMessage> getDeathMessages() {
-        return this.deathMessages;
+        return deathMessages;
     }
 
     public DeathMessage get(String causeOrMob) {

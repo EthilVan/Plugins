@@ -49,25 +49,25 @@ public class DeathsPlugin extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
         DamageCause eventCause = event.getEntity().getLastDamageCause().getCause();
-        DeathMessage deathMessage = this.deathMessages.get(eventCause.toString());
-        String killerName = this.getKillerName(event);
+        DeathMessage deathMessage = deathMessages.get(eventCause.toString());
+        String killerName = getKillerName(event);
 
         if (killerName == null) {
             killerName = "";
         }
 
         if (killerName.equals("Dispenser")) {
-            deathMessage = this.deathMessages.get("Dispenser");
+            deathMessage = deathMessages.get("Dispenser");
         }
 
-        EntityType killer = this.getEntityType(killerName);
+        EntityType killer = getEntityType(killerName);
 
         if (deathMessage == null && killer != null) {
-            deathMessage = this.deathMessages.get(killer.getName());
+            deathMessage = deathMessages.get(killer.getName());
         }
 
         if (killer == EntityType.PLAYER) {
-            deathMessage = this.deathMessages.get("Player");
+            deathMessage = deathMessages.get("Player");
         }
 
         if (deathMessage != null) {
