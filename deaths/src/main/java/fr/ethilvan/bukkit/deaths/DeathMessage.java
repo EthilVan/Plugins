@@ -3,6 +3,7 @@ package fr.ethilvan.bukkit.deaths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
@@ -14,9 +15,7 @@ public class DeathMessage {
 
     public DeathMessage(List<String> messages) {
         this.messages = new ArrayList<String>();
-        for (String message : messages) {
-            this.messages.add(message);
-        }
+        this.messages.addAll(messages);
     }
 
     public List<String> getMessages() {
@@ -24,27 +23,53 @@ public class DeathMessage {
     }
 
     public String getOneMessage(PlayerDeathEvent event) {
-        if (this.messages.size() > 0) {
-            int index = Util.getRandom().nextInt(this.messages.size());
-            String message = this.messages.get(index);
-            if (event.getEntity().getKiller() != null ) {
-                message = message.replace("<murderer>", event.getEntity().getKiller().getDisplayName());
-                message = message.replace("<item>", event.getEntity().getKiller().getItemInHand().toString());
-            }
-            return message.replace("<player>", getPlayer(event).getDisplayName());
-        }
-        return null;
+        return this.parse(Util.pickRandom(messages), event);
     }
 
-    public boolean isDamageCause() {
+    private boolean isVowel(char c) {
+        if (!Character.isLetter(c)) {
+            return false;
+        }
+
+        char[] VOWELS = {'a','e','i','o','u','y'};
+
+        for (Character vowel : VOWELS) {
+            if (Character.toLowerCase(c) == vowel)
+                return true;
+        }
+
         return false;
     }
 
-    public boolean isEntity() {
-        return true;
+    private String ofFormat(String string) {
+        char firstChar = ChatColor.stripColor(string).charAt(0);
+        if (isVowel(firstChar)) {
+            return "d'" + string;
+        }
+
+        return "de " + string;
     }
 
-    private Player getPlayer(PlayerDeathEvent event) {
-        return event.getEntity();
+    private String parse(String message, PlayerDeathEvent event) {
+        Player death = event.getEntity();
+
+        message = message.replaceAll("<player>", death.getDisplayName());
+        message = message.replaceAll("<world>", death.getWorld().getName());
+
+        if (message.contains("<ofplayer>")) {
+            message.replaceAll("<ofplayer>", this.ofFormat(death.getDisplayName()));
+        }
+        if (message.contains("<ofworld>")) {
+            message.replaceAll("<ofworld>", this.ofFormat(death.getWorld().getName()));
+        }
+        Player killer = death.getKiller();
+        if (killer != null) {
+            message = message.replaceAll("<murderer>", killer.getDisplayName());
+            if (message.contains("<ofmurderer>")) {
+                message.replaceAll("<ofmurderer>", this.ofFormat(killer.getDisplayName()));
+            }
+            message = message.replaceAll("<item>", killer.getItemInHand().getType().toString());
+        }
+        return message;
     }
 }

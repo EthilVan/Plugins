@@ -49,9 +49,19 @@ public class DeathsPlugin extends JavaPlugin implements Listener {
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
         DamageCause eventCause = event.getEntity().getLastDamageCause().getCause();
-        System.out.println(eventCause.toString());
         DeathMessage deathMessage = this.deathMessages.get(eventCause.toString());
-        EntityType killer = this.getKiller(event);
+        String killerName = this.getKillerName(event);
+
+        if (killerName == null) {
+            killerName = "";
+        }
+
+        if (killerName.equals("Dispenser")) {
+            deathMessage = this.deathMessages.get("Dispenser");
+        }
+
+        EntityType killer = this.getEntityType(killerName);
+
         if (deathMessage == null && killer != null) {
             deathMessage = this.deathMessages.get(killer.getName());
         }
@@ -65,7 +75,7 @@ public class DeathsPlugin extends JavaPlugin implements Listener {
         }
     }
 
-    public EntityType getKiller(PlayerDeathEvent event) {
+    private String getKillerName(PlayerDeathEvent event) {
         EntityDamageEvent dmgEvent = (event.getEntity()).getLastDamageCause();
         if (dmgEvent instanceof EntityDamageByEntityEvent) {
             EntityDamageByEntityEvent dmgByEntityEvent =
@@ -73,11 +83,23 @@ public class DeathsPlugin extends JavaPlugin implements Listener {
             Entity damager = dmgByEntityEvent.getDamager();
             if (damager instanceof Projectile) {
                 damager = ((Projectile) damager).getShooter();
+                if (damager == null) {
+                    return "Dispenser";
+                }
             }
 
-            return damager.getType();
+            return damager.getType().getName();
         }
         return null;
+    }
+
+    private EntityType getEntityType(String name) {
+        EntityType type = EntityType.fromName(name);
+        if (type == null) {
+            return EntityType.UNKNOWN;
+        }
+
+        return type;
     }
 
     private GsonLoader getGsonLoader() {
