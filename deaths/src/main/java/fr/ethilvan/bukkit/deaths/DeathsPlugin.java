@@ -1,14 +1,17 @@
 package fr.ethilvan.bukkit.deaths;
 
-import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,31 +48,36 @@ public class DeathsPlugin extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDeath(PlayerDeathEvent event) {
-        for (DeathMessage deathMessage : getDeathMessages()) {
-            EntityType eventMobType = deathMessage.getKiller(event);
-            if (eventMobType == EntityType.PLAYER && deathMessage.getDeathCauseOrMob().equalsIgnoreCase("PLAYER")) {
-                event.setDeathMessage(deathMessage.getOneMessage(event));
-            } else if (deathMessage.isDamageCause()) {
-                DamageCause eventCause = event.getEntity()
-                        .getLastDamageCause().getCause();
-                DamageCause messageCause =
-                        DamageCause.valueOf(deathMessage.getDeathCauseOrMob());
-                if (eventCause == messageCause) {
-                    event.setDeathMessage(deathMessage.getOneMessage(event));
-                    return;
-                }
-            } else if (deathMessage.isEntity()) {
-                EntityType messageMobType = EntityType.fromName(deathMessage.getDeathCauseOrMob());
-                if (eventMobType == messageMobType) {
-                    event.setDeathMessage(deathMessage.getOneMessage(event));
-                    return;
-                }
-            }
+        DamageCause eventCause = event.getEntity().getLastDamageCause().getCause();
+        System.out.println(eventCause.toString());
+        DeathMessage deathMessage = this.deathMessages.get(eventCause.toString());
+        EntityType killer = this.getKiller(event);
+        if (deathMessage == null && killer != null) {
+            deathMessage = this.deathMessages.get(killer.getName());
+        }
+
+        if (killer == EntityType.PLAYER) {
+            deathMessage = this.deathMessages.get("Player");
+        }
+
+        if (deathMessage != null) {
+            event.setDeathMessage(deathMessage.getOneMessage(event));
         }
     }
 
-    public List<DeathMessage> getDeathMessages() {
-        return deathMessages.getDeathMessages();
+    public EntityType getKiller(PlayerDeathEvent event) {
+        EntityDamageEvent dmgEvent = (event.getEntity()).getLastDamageCause();
+        if (dmgEvent instanceof EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent dmgByEntityEvent =
+                    (EntityDamageByEntityEvent)dmgEvent;
+            Entity damager = dmgByEntityEvent.getDamager();
+            if (damager instanceof Projectile) {
+                damager = ((Projectile) damager).getShooter();
+            }
+
+            return damager.getType();
+        }
+        return null;
     }
 
     private GsonLoader getGsonLoader() {
