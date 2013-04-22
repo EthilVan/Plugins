@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -66,13 +68,38 @@ public class DeathsPlugin extends JavaPlugin implements Listener {
             deathMessage = deathMessages.get(killer.getName());
         }
 
-        if (killer == EntityType.PLAYER) {
+        if (killer == EntityType.SKELETON) {
+            Skeleton entity = (Skeleton) getKillerEntityClass(event);
+            deathMessage = deathMessages.getIfEntityHasTypes(killerName, entity.getSkeletonType().getId());
+        } else if (killer == EntityType.ZOMBIE) {
+            Zombie entity = (Zombie) getKillerEntityClass(event);
+            deathMessage = deathMessages.getIfEntityHasTypes(killerName, getZombieType(entity));
+        } else if (killer == EntityType.PLAYER) {
             deathMessage = deathMessages.get("Player");
         }
 
         if (deathMessage != null) {
             event.setDeathMessage(deathMessage.getOneMessage(event));
         }
+    }
+
+    private int getZombieType(Zombie zombie) {
+        return !zombie.isVillager() ? 0 : 1;
+    }
+
+    private Entity getKillerEntityClass(PlayerDeathEvent event) {
+        EntityDamageEvent dmgEvent = (event.getEntity()).getLastDamageCause();
+        if (dmgEvent instanceof EntityDamageByEntityEvent) {
+            EntityDamageByEntityEvent dmgByEntityEvent =
+                    (EntityDamageByEntityEvent)dmgEvent;
+            Entity damager = dmgByEntityEvent.getDamager();
+            if (damager instanceof Projectile) {
+                damager = ((Projectile) damager).getShooter();
+            }
+
+            return damager;
+        }
+        return null;
     }
 
     private String getKillerName(PlayerDeathEvent event) {

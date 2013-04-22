@@ -87,7 +87,7 @@ public class DropsListener implements Listener {
                             + randomDrop.getEntityName());
                     return;
                 }
-                if (randomDrop.drop(event.getEntity().getType())) {
+                if (randomDrop.drop(event.getEntity())) {
                     event.getDrops().add(randomDrop.toItemStack());
                 }
             }
@@ -99,7 +99,7 @@ public class DropsListener implements Listener {
                     return;
                 }
 
-                if (moneyDrop.drop(event.getEntity().getType())) {
+                if (moneyDrop.drop(event.getEntity())) {
                     moneyDrop.dropMoneyToPlayer((Player) damager);
                 }
             }

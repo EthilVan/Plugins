@@ -3,7 +3,10 @@ package fr.ethilvan.bukkit.drops.customDrops;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Zombie;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,6 +15,7 @@ import fr.aumgn.bukkitutils.util.Util;
 public class CustomDrop {
 
     private String entityName;
+    private int entityType;
     private int id;
     private short data;
     private String enchantmentName;
@@ -23,6 +27,17 @@ public class CustomDrop {
     public CustomDrop(String entityName, ItemStack drop, int amountMin,
             int amountMax, double rate) {
         this.entityName = entityName;
+        this.id = drop.getTypeId();
+        this.data = drop.getDurability();
+        this.amountMin = amountMin;
+        this.amountMax = amountMax;
+        this.rate = rate;
+    }
+
+    public CustomDrop(String entityName, ItemStack drop, int amountMin,
+            int amountMax, double rate, int entityType) {
+        this.entityName = entityName;
+        this.entityType = entityType;
         this.id = drop.getTypeId();
         this.data = drop.getDurability();
         this.amountMin = amountMin;
@@ -63,8 +78,25 @@ public class CustomDrop {
         return entityName;
     }
 
-    public boolean drop(EntityType entity) {
-        return getEntityType() == entity 
-                && Util.getRandom().nextDouble(100) <= rate;
+    public boolean drop(Entity entity) {
+        boolean hasTheSameType = getEntityType() == entity.getType();
+        if (entity instanceof Skeleton) {
+            Skeleton skeleton = (Skeleton) entity;
+            if (skeleton.getSkeletonType().getId() != entityType) {
+                return false;
+            }
+        }
+
+        if (entity instanceof Zombie) {
+            Zombie zombie = (Zombie) entity;
+            if (getZombieType(zombie) != entityType) {
+                return false;
+            }
+        }
+        return hasTheSameType && Util.getRandom().nextDouble(100) <= rate;
+    }
+
+    private int getZombieType(Zombie zombie) {
+        return !zombie.isVillager() ? 0 : 1;
     }
 }

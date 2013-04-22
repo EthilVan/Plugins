@@ -2,8 +2,11 @@ package fr.ethilvan.bukkit.drops.eco;
 
 import net.milkbowl.vault.economy.Economy;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Zombie;
 
 import fr.aumgn.bukkitutils.util.Util;
 import fr.ethilvan.bukkit.api.EthilVan;
@@ -11,6 +14,7 @@ import fr.ethilvan.bukkit.api.EthilVan;
 public class MoneyDrop {
 
     private String entityName;
+    private int entityType;
     private int rate;
     private int min;
     private int max;
@@ -20,6 +24,11 @@ public class MoneyDrop {
         this.rate = rate;
         this.min = min;
         this.max = max;
+    }
+
+    public MoneyDrop(EntityType entity, int entityType, int rate, int min, int max) {
+        this(entity, rate, min, max);
+        this.entityType = entityType;
     }
 
     public EntityType getEntityType() {
@@ -34,13 +43,30 @@ public class MoneyDrop {
         }
     }
 
-    public boolean drop(EntityType entity) {
-        return getEntityType() == entity
-                && Util.getRandom().nextInt(100) < rate - 1;
+    public boolean drop(Entity entity) {
+        boolean hasTheSameType = getEntityType() == entity.getType();
+        if (entity instanceof Skeleton) {
+            Skeleton skeleton = (Skeleton) entity;
+            if (skeleton.getSkeletonType().getId() != entityType) {
+                return false;
+            }
+        }
+
+        if (entity instanceof Zombie) {
+            Zombie zombie = (Zombie) entity;
+            if (getZombieType(zombie) != entityType) {
+                return false;
+            }
+        }
+        return hasTheSameType && Util.getRandom().nextDouble(100) <= rate;
     }
 
     public String getEntityName() {
         return entityName;
+    }
+
+    private int getZombieType(Zombie zombie) {
+        return !zombie.isVillager() ? 0 : 1;
     }
 
     public void dropMoneyToPlayer(Player player) {
